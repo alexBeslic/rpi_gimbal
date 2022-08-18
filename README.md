@@ -32,9 +32,9 @@ Edit the /boot/config.txt file and add the following line to use GPIO_18 as the 
 
     dtoverlay=pwm,pin=18,func=2
 
-After rebooting your RPI check if everything is working on run:
+After rebooting your RPI check if everything is working run:
 
     lsmod | grep pwm 
 
-and looking for pwm_bcm2835
+and looking for **pwm_bcm2835**  
 See: [here](https://github.com/dotnet/iot/blob/main/Documentation/raspi-pwm.md#:~:text=IOException%3A%20Permission%20denied-,Enabling%20hardware%20PWM,-In%20order%20to)
