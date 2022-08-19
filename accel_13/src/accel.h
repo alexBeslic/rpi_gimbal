@@ -10,10 +10,10 @@
 
 /* Sensor addreses */
 #define SAD				0x30 //<<< I2C slave address
-#define CTRL1_ADDR 		0x20
-#define CTRL6_ADDR		0x25
-#define STATUS_ADDR		0x27
-#define X_OUT_L_ADDR	0x28
+#define GYRO_CTRL_ADDR 		0x1B
+#define ACCEL_CTRL1_ADDR	0x1C
+#define ACCEL_CTRL2_ADDR	0x1D
+#define ACCEL_XOUT_H        0x3B
 
 /* Control data */
 #define CTRL1_REG		0x74 //<< High-Perf 400 Hz, 14 bit 
