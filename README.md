@@ -22,11 +22,16 @@ At the command prompt type one of these depending on whether you are using the I
 Add the user 'pi' to I2C users so that you don't have to run the I2C tools as root:
 
     sudo adduser pi i2c
-    
+
+Setting the I²C Bus Speed:  
+Edit the /boot/config.txt file and add the following line for 400 kHz bus speeds
+
+    dtparam=i2c_baudrate=400000
+
 References:
 [link-1](https://raspberry-projects.com/pi/programming-in-c/i2c/using-the-i2c-interface)
 [link-2](https://www.hobbytronics.co.uk/raspberry-pi-raspbian-distro#:~:text=cd%20..-,I2C%20Tools%20Package,-There%20is%20a)
-
+[link-3](https://www.abelectronics.co.uk/kb/article/1/i2c-part-2---enabling-i-c-on-the-raspberry-pi)
 ## Enabling hardware PWM
 Edit the /boot/config.txt file and add the following line to use GPIO_18 as the pin for PWM0:
 
