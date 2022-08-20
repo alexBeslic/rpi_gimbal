@@ -31,7 +31,7 @@ uint8_t open_i2c_bus()
  */
 uint8_t accel_config()
 {
-
+    /*
     // Setting up CTRL 1
 
     uint8_t data[2] = {CTRL1_ADDR, CTRL1_REG};
@@ -39,7 +39,7 @@ uint8_t accel_config()
 
     if (write(file_i2c, data, length) != length)
 	{
-		/* ERROR HANDLING: i2c transaction failed */
+		// ERROR HANDLING: i2c transaction failed
 		printf("Failed to write to the i2c bus.\n");
         return 1;
 	}
@@ -51,12 +51,13 @@ uint8_t accel_config()
 
     if (write(file_i2c, data, length) != length)
 	{
-		/* ERROR HANDLING: i2c transaction failed */
+		// ERROR HANDLING: i2c transaction failed
 		perror("write");
         return 1;
 	}
 
     return 0;
+    */
 }
 
 /**
@@ -66,12 +67,61 @@ uint8_t accel_config()
  */
 uint8_t read_accel_xyz()
 {
+    
     uint8_t data;
     uint8_t accel_data[6];
-	uint8_t write_addr = STATUS_ADDR;
+	uint8_t write_addr = ACCEL_XOUT_H_ADDR;
     uint8_t length = sizeof(write_addr);
 
-    // Tell the sensor we want to read Status reg
+    // Tell the sensor we want to read XYZ
+    if (write(file_i2c, &write_addr, length) != length)
+    {
+        // ERROR HANDLING: i2c transaction failed
+        perror("write");
+        return 1;
+    }
+    else
+    {
+        // Read XYZ
+        length = sizeof(accel_data);
+
+        if (read(file_i2c, accel_data, length) != length)
+        {
+            //ERROR HANDLING: i2c transaction failed
+            perror("read");
+            return 1;
+        }
+        else
+        {
+            // Extract Data
+            int16_t x_data = (accel_data[0] << 8) | accel_data[1];
+            int16_t y_data = (accel_data[2] << 8) | accel_data[3];
+            int16_t z_data = (accel_data[4] << 8) | accel_data[5];
+
+            ACCEL_XYZ.x = (x_data / CONV_CONST);
+            ACCEL_XYZ.y = (y_data / CONV_CONST);
+            ACCEL_XYZ.z = (z_data / CONV_CONST);
+        }
+        
+    }
+
+    return 0;
+
+}
+
+/**
+ * @brief Who am I 
+ * 
+ * @return uint8_t (0 - on success; 1 - on failure)
+ */
+uint8_t read_whoami()
+{
+    uint8_t data;
+	uint8_t write_addr = WHOAMI_ADDR;
+    uint8_t length = sizeof(write_addr);
+
+
+    // Tell the sensor we want to read Who am I  reg
     if (write(file_i2c, &write_addr, length) != length)
 	{
 		/* ERROR HANDLING: i2c transaction failed */
@@ -80,7 +130,9 @@ uint8_t read_accel_xyz()
 	}
     else
     {
-        // Read Status
+        length = sizeof(data);
+        
+        // Read Who am I reg.
         if (read(file_i2c, &data, length) != length)
 	    {
 		    //ERROR HANDLING: i2c transaction failed
@@ -89,50 +141,8 @@ uint8_t read_accel_xyz()
         }
         else
         {
-            // Check Data-ready status.
-            if (data & 0x01)
-            {
-                // Tell the sensor we want to read XYZ
-                write_addr = X_OUT_L_ADDR;
-
-                if (write(file_i2c, &write_addr, length) != length)
-                {
-                    /* ERROR HANDLING: i2c transaction failed */
-                    perror("write");
-                    return 1;
-                }
-                else
-                {
-                    // Read XYZ
-                    length = sizeof(accel_data);
-
-                    if (read(file_i2c, accel_data, length) != length)
-                    {
-                        //ERROR HANDLING: i2c transaction failed
-                        perror("read");
-                        return 1;
-                    }
-                    else
-                    {
-                        // Extract Data
-                        int16_t x_data = (accel_data[1] << 8) | accel_data[0];
-                        int16_t y_data = (accel_data[3] << 8) | accel_data[2];
-                        int16_t z_data = (accel_data[5] << 8) | accel_data[4];
-
-                        ACCEL_XYZ.x = ((x_data / 4) * CONV_CONST);
-                        ACCEL_XYZ.y = ((y_data / 4) * CONV_CONST);
-                        ACCEL_XYZ.z = ((z_data / 4) * CONV_CONST);
-                    }
-                    
-                }
-            }
-            else
-            {
-                // Data not ready
-                return 2;
-            }
+            printf("Device ID: %ld", data);
         }
-    }
 
     return 0;
 }
