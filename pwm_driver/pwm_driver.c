@@ -4,10 +4,11 @@
 #include <linux/cdev.h>
 #include <linux/uaccess.h>
 #include <linux/pwm.h>
+#include <linux/kernel.h>
 
 /* Meta Information */
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Johannes 4 GNU/Linux");
+MODULE_AUTHOR("Ja");
 MODULE_DESCRIPTION("A simple driver to access the Hardware PWM IP");
 
 /* Variables for device and device class */
@@ -20,31 +21,34 @@ static struct cdev my_device;
 
 /* Variables for pwm  */
 struct pwm_device *pwm0 = NULL;
-u32 pwm_on_time = 500000000;
+u32 pwm_on_time = 1830000;
+u32 pwm_period = 20000000;
 
 /**
  * @brief Write data to buffer
  */
 static ssize_t driver_write(struct file *File, const char *user_buffer, size_t count, loff_t *offs) {
 	int to_copy, not_copied, delta;
-	char value;
-
+	long pom;
+	char value[10];
+	
 	/* Get amount of data to copy */
 	to_copy = min(count, sizeof(value));
 
 	/* Copy data to user */
-	not_copied = copy_from_user(&value, user_buffer, to_copy);
-
+	not_copied = copy_from_user(value, user_buffer, count);
+	value[count-1] = 0x00;
+	kstrtol(value, 10, &pom);
 	/* Set PWM on time */
-	if(value < 'a' || value > 'j')
+	if(pom < 0 && pom > 100)
 		printk("Invalid Value\n");
 	else
-		pwm_config(pwm0, 100000000 * (value - 'a'), 1000000000);
-
+		pwm_config(pwm0, pwm_on_time/100 * pom + 670000, pwm_period);
+	
 	/* Calculate data */
 	delta = to_copy - not_copied;
 
-	return delta;
+	return count;
 }
 
 /**
@@ -110,7 +114,7 @@ static int __init ModuleInit(void) {
 		goto AddError;
 	}
 
-	pwm_config(pwm0, pwm_on_time, 1000000000);
+	pwm_config(pwm0, pwm_on_time + 670000, pwm_period);
 	pwm_enable(pwm0);
 
 	return 0;

@@ -1,8 +1,9 @@
-obj-m += pwm_driver.o
+MYY_KERNEL_DIR ?= /home/nemanja/rpi-kernel/linux
+ARCH ?= arm
 
+obj-m += pwm_driver.o
 all:
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+	make ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) M=$(PWD) -C $(MYY_KERNEL_DIR) modules
 
 clean:
-	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
-	
+	make ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) M=$(PWD) -C $(MYY_KERNEL_DIR) clean
