@@ -1,12 +1,19 @@
 #ifndef ACCEL_H_INCLUDED
 #define ACCEL_H_INCLUDED
+/*
 
+    DEPRECATE!!!
+
+    Can't use I2c to read/write to 6DOF IMU 5 CLICK( ICM-20789 ) because mikroE can't write good documentation
+
+*/
 #include <stdio.h>
 #include <stdint.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <linux/i2c-dev.h>
 #include <sys/ioctl.h>
+#include <i2c/smbus.h>
 
 
 #define SAD				    0x68 //<<< I2C slave address
