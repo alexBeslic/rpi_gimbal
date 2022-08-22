@@ -20,19 +20,19 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-   /* ret = sensor_config();
+	ret = sensor_config();
 
     if (ret != 0)
     {
         printf("Error occurred while configuring accel\n");
         return EXIT_FAILURE;
-    }*/
+    }
     
     while (1)
     {
         ret = read_accel_xyz();
         printf("Status: %d\n", ret);
-        printf("X: %.4f Y: %.4f Z: %.4f \n\n", ACCEL_XYZ.x, ACCEL_XYZ.y, ACCEL_XYZ.z);
+        printf("X: %.8f Y: %.8f Z: %.8f \n\n", ACCEL_XYZ.x, ACCEL_XYZ.y, ACCEL_XYZ.z);
 
         sleep(1);
     }

@@ -19,9 +19,10 @@
 #define ACCEL_CTRL2_ADDR	0x1D
 #define ACCEL_XOUT_H_ADDR   0x3B // 6B to read
 #define GYRO_XOUT_H_ADDR    0x43 // 6B to read
+#define PWR_MGMT_1 	        0x6B
 
 /* Coversion const*/
-#define CONV_CONST		16.384 // Units LSB/g 
+#define CONV_CONST		16384.00 // Units LSB/g 
 
 // Strict definition
 struct sensor_data
@@ -41,5 +42,7 @@ uint8_t sensor_config();
 uint8_t read_accel_xyz();
 uint8_t read_gyro_xyz();
 uint8_t read_whoami();
+uint8_t read_registar(unsigned char);
+uint8_t write_registar(unsigned char, unsigned char);
 
 #endif

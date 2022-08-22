@@ -11,16 +11,22 @@
 int main(int argc, char **argv)
 {
     uint8_t ret;
-
+	
     ret = open_spi_bus();
-
+	
     if (ret != 0)
     {
         printf("Error occurred while opening SPI bus\n");
         return EXIT_FAILURE;
     }
-
-    ret = read_whoami();
+    
+    sensor_config();
+    
+    if(argc == 3){
+		ret = write_registar((unsigned char)atoi(argv[1]), (unsigned char)atoi(argv[2]));
+		sleep(1);
+	}
+    ret = read_registar((unsigned char)atoi(argv[1]));
 
     if (ret != 0)
     {
