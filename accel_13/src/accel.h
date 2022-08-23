@@ -22,15 +22,11 @@
 #define ACCEL_CTRL1_ADDR	0x1C
 #define ACCEL_CTRL2_ADDR	0x1D
 #define ACCEL_XOUT_H_ADDR   0x3B // 6B to read
-#define GYRO_XOUT_H         0x43 // 6B to read
+#define GYRO_XOUT_H_ADDR    0x43 // 6B to read
 
-
-/* Control data */
-#define CTRL1_REG		0x74 //<< High-Perf 400 Hz, 14 bit 
-#define CTRL6_REG		0x04 //<< Low Noise, 2 g
 
 /* Coversion const*/
-#define CONV_CONST		16.384
+#define CONV_CONST		16384.00
 
 char *filename = (char*)"/dev/i2c-1"; // GPIO 2 (SDA) and GPIO 3 (SCL)
 

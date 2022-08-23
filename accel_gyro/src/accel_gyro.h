@@ -19,10 +19,11 @@
 #define ACCEL_CTRL2_ADDR	0x1D
 #define ACCEL_XOUT_H_ADDR   0x3B // 6B to read
 #define GYRO_XOUT_H_ADDR    0x43 // 6B to read
-#define PWR_MGMT_1 	        0x6B
+#define PWR_MGMT_1_ADDR 	0x6B
 
 /* Coversion const*/
-#define CONV_CONST		16384.00 // Units LSB/g 
+#define ACCEL_CONV_CONST	16384.00 // Units LSB/g 
+#define GYRO_CONV_CONST     131.00 // Units LSB/(dps)
 
 // Strict definition
 struct sensor_data

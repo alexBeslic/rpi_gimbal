@@ -1,7 +1,7 @@
 /**
  * @file accel_gyro.c
- * @author your name (you@domain.com)
- * @brief 
+ * @author rpi_gimbal
+ * @brief SPI interface for 6DOF IMU 5 CLICK(ICM-20789).
  * @version 0.1
  * @date 2022-08-21
  * 
@@ -83,13 +83,14 @@ uint8_t close_spi_bus()
 }
 
 /**
- * @brief Transfers 1B on the SPI bus
+* @brief Transfers data on the SPI interface
  * 
- * @param RxData Read data
- * @param TxData Data to write
+ * @param data Write/Read data
+ * @param length Number of bytes to transfers
  * @return uint8_t (0 - on success; 1 - on failure)
  */
-void spi_read_write(uint8_t *data, int length){
+uint8_t spi_read_write(uint8_t *data, int length)
+{
     struct spi_ioc_transfer spi[length];
 
     for(int i=0;i<length;i++){
@@ -100,11 +101,13 @@ void spi_read_write(uint8_t *data, int length){
         spi[i].speed_hz=spi_speed;
         spi[i].bits_per_word=spi_bitsPerWord;
     }
+
     if(ioctl(spi_file,SPI_IOC_MESSAGE(length),spi)<0){
-        perror("Cetic");
-        close(spi_file);
-        exit(-1);
+        perror("Could not write/read SPI bus...ioctl fail");
+        return 1;
     }
+
+    return 0;
 }
 
 /**
@@ -114,61 +117,69 @@ void spi_read_write(uint8_t *data, int length){
  */
 uint8_t sensor_config()
 {	
-	int ret;
-	// Upisati sve nule u registar 6B
-	ret = write_registar(PWR_MGMT_1, 0x00);
-    if (ret != 0)
+	uint8_t ret_val;
+
+    // Write all zeros to POWER MANAGEMENT 1 (Sleep mode off)
+	ret_val = write_registar(PWR_MGMT_1_ADDR, 0x00);
+
+    if (ret_val != 0)
     {
         printf("Error occurred while reading for SPI bus\n");
         return EXIT_FAILURE;
     }
-    // TODO:
+
     return 0;
 }
 
 /**
  * @brief Reads Accel XYZ and puts them in ACCEL_XYZ
  * 
- * @return uint8_t (0 - on success; 1 - on failure; 2 - Data not ready)
+ * @return uint8_t (0 - on success; 1 - on failure)
  */
 uint8_t read_accel_xyz()
 {	
-	uint8_t data[12];
-	uint16_t temp;
-    data[0]=0x80 | ACCEL_XOUT_H_ADDR;
-    data[1]=0x00;
-    spi_read_write(data, 2);
-    data[2]=0x80 | (ACCEL_XOUT_H_ADDR+1);
-    data[3]=0x00;
-    spi_read_write(data+2, 2);
-    data[4]=0x80 | (ACCEL_XOUT_H_ADDR+2);
-    data[5]=0x00;
-    spi_read_write(data+4, 2);
-    data[6]=0x80 | (ACCEL_XOUT_H_ADDR+3);
-    data[7]=0x00;
-    spi_read_write(data+6, 2);
-    data[8]=0x80 | (ACCEL_XOUT_H_ADDR+4);
-    data[9]=0x00;
-    spi_read_write(data+8, 2);
-    data[10]=0x80 | (ACCEL_XOUT_H_ADDR+5);
-    data[11]=0x00;
-    spi_read_write(data+10, 2);
-    temp = data[1];
-    printf("data1 = %x\n", temp);
-    int16_t x_data = (data[1] << 8) | data[3];
-    printf("x_data = %x\n", x_data);
-    temp = data[5];
-    printf("data5 = %x\n", temp);
-    int16_t y_data = (data[5] << 8) | data[7];
-    printf("y_data = %x\n", y_data);
-    temp = data[9];
-    printf("data9 = %x\n", temp);
-    int16_t z_data = (data[9] << 8) | data[11];
-    printf("z_data = %x\n", z_data);
+    uint8_t ret_val;
+    uint8_t dummy_val = 0x69;
+	uint8_t data[12] = {0};
 
-	ACCEL_XYZ.x = (x_data / CONV_CONST);
-    ACCEL_XYZ.y = (y_data / CONV_CONST);
-    ACCEL_XYZ.z = (z_data / CONV_CONST);
+    data[0] = 0x80 | ACCEL_XOUT_H_ADDR;
+    data[1] = dummy_val;
+    ret_val = spi_read_write(data, 2);
+
+    data[2] = 0x80 | (ACCEL_XOUT_H_ADDR+1);
+    data[3] = dummy_val;
+    ret_val = spi_read_write(data+2, 2);
+
+    data[4] = 0x80 | (ACCEL_XOUT_H_ADDR+2);
+    data[5] = dummy_val;
+    ret_val = spi_read_write(data+4, 2);
+
+    data[6] = 0x80 | (ACCEL_XOUT_H_ADDR+3);
+    data[7] = dummy_val;
+    ret_val = spi_read_write(data+6, 2);
+
+    data[8] = 0x80 | (ACCEL_XOUT_H_ADDR+4);
+    data[9] = dummy_val;
+    ret_val = spi_read_write(data+8, 2);
+
+    data[10] = 0x80 | (ACCEL_XOUT_H_ADDR+5);
+    data[11] = dummy_val;
+    ret_val = spi_read_write(data+10, 2);
+
+    if (ret_val != 0)
+    {
+        printf("Error occurred while reading Accel sensor\n");
+        return 1;
+    }
+
+    int16_t x_data = (data[1] << 8) | data[3];
+    int16_t y_data = (data[5] << 8) | data[7];
+    int16_t z_data = (data[9] << 8) | data[11];
+
+	ACCEL_XYZ.x = (x_data / ACCEL_CONV_CONST);
+    ACCEL_XYZ.y = (y_data / ACCEL_CONV_CONST);
+    ACCEL_XYZ.z = (z_data / ACCEL_CONV_CONST);
+
     return 0;
 }
 
@@ -179,6 +190,48 @@ uint8_t read_accel_xyz()
  */
 uint8_t read_gyro_xyz()
 {
+    uint8_t ret_val;
+    uint8_t dummy_val = 0x69;
+	uint8_t data[12] = {0};
+
+    data[0] = 0x80 | GYRO_XOUT_H_ADDR;
+    data[1] = dummy_val;
+    ret_val = spi_read_write(data, 2);
+
+    data[2] = 0x80 | (GYRO_XOUT_H_ADDR+1);
+    data[3] = dummy_val;
+    ret_val = spi_read_write(data+2, 2);
+
+    data[4] = 0x80 | (GYRO_XOUT_H_ADDR+2);
+    data[5] = dummy_val;
+    ret_val = spi_read_write(data+4, 2);
+
+    data[6] = 0x80 | (GYRO_XOUT_H_ADDR+3);
+    data[7] = dummy_val;
+    ret_val = spi_read_write(data+6, 2);
+
+    data[8] = 0x80 | (GYRO_XOUT_H_ADDR+4);
+    data[9] = dummy_val;
+    ret_val = spi_read_write(data+8, 2);
+
+    data[10] = 0x80 | (GYRO_XOUT_H_ADDR+5);
+    data[11] = dummy_val;
+    ret_val = spi_read_write(data+10, 2);
+
+    if (ret_val != 0)
+    {
+        printf("Error occurred while reading Gyro sensor\n");
+        return 1;
+    }
+
+    int16_t x_data = (data[1] << 8) | data[3];
+    int16_t y_data = (data[5] << 8) | data[7];
+    int16_t z_data = (data[9] << 8) | data[11];
+
+	GYRO_XYZ.x = (x_data / GYRO_CONV_CONST);
+    GYRO_XYZ.y = (y_data / GYRO_CONV_CONST);
+    GYRO_XYZ.z = (z_data / GYRO_CONV_CONST);
+
     return 0;
 }
 
@@ -189,38 +242,76 @@ uint8_t read_gyro_xyz()
  */
  uint8_t read_whoami()
 {
+    uint8_t ret_val;
     uint8_t data[2];
-    data[0]=0x80 | WHOAMI_ADDR;
-    data[1]=0xff;
-    spi_read_write(data, 2);
 
-    printf("What is in here: %x\n", data[0]);
+    data[0] = 0x80 | WHOAMI_ADDR;
+    data[1] = 0xff;
+    ret_val = spi_read_write(data, 2);
+
+    if (ret_val != 0)
+    {
+        printf("Error occurred while reading Who am I reg.\n");
+        return 1;
+    }
+
+    printf("First byte: %x\n", data[0]);
     printf("Who am I: %x\n", data[1]);
 
     return 0;
 }
 
+/**
+ * @brief Reads 1B from a register
+ * 
+ * @param reg 
+ * @return uint8_t (0 - on success; 1 - on failure)
+ */
 uint8_t read_registar(unsigned char reg)
 {
+    uint8_t ret_val;
     uint8_t data[2];
-    data[0]=0x80 | reg;
-    data[1]=0xff;
-    spi_read_write(data, 2);
 
-    printf("What is in here: %x\n", data[0]);
-    printf("Who am I: %x\n", data[1]);
+    data[0] = 0x80 | reg;
+    data[1] = 0xff;
+    ret_val = spi_read_write(data, 2);
+
+    if (ret_val != 0)
+    {
+        printf("Error occurred while reading Who am I reg.\n");
+        return 1;
+    }
+
+    printf("Reg: %x\n", data[0]);
+    printf("Value: %x\n", data[1]);
 
     return 0;
 }
+
+/**
+ * @brief Writes 1B to a register
+ * 
+ * @param reg 
+ * @param val 
+ * @return uint8_t (0 - on success; 1 - on failure)
+ */
 uint8_t write_registar(unsigned char reg, unsigned char val)
 {
+    uint8_t ret_val;
     uint8_t data[2];
-    data[0]=0x00 | reg;
-    data[1]=val;
-    spi_read_write(data, 2);
 
-    printf("What is in here: %x\n", data[0]);
-    printf("Who am I: %x\n", data[1]);
+    data[0] = 0x00 | reg;
+    data[1] = val;
+    ret_val = spi_read_write(data, 2);
+
+    if (ret_val != 0)
+    {
+        printf("Error occurred while reading Who am I reg.\n");
+        return 1;
+    }
+
+    printf("Reg: %x\n", data[0]);
+    printf("Value: %x\n", data[1]);
 
     return 0;
 }
