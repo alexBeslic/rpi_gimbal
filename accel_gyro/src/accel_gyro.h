@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <math.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/types.h>
@@ -45,5 +46,6 @@ uint8_t read_gyro_xyz();
 uint8_t read_whoami();
 uint8_t read_registar(unsigned char);
 uint8_t write_registar(unsigned char, unsigned char);
+uint8_t calculate_error();
 
 #endif

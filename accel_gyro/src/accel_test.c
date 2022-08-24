@@ -5,7 +5,7 @@
 /*
     compile:
     
-    arm-linux-gnueabihf-gcc -Wall accel_gyro.c accel_test_.c -o who
+    arm-linux-gnueabihf-gcc -Wall accel_gyro.c accel_test_.c -lm -o who
 */
 
 int main(int argc, char **argv)
@@ -27,6 +27,15 @@ int main(int argc, char **argv)
         printf("Error occurred while configuring accel\n");
         return EXIT_FAILURE;
     }
+
+    ret = calculate_error();
+
+    if (ret != 0)
+    {
+        printf("Error occurred while configuring accel\n");
+        return EXIT_FAILURE;
+    }
+
     
     while (1)
     {

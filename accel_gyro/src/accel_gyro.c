@@ -16,7 +16,8 @@ static int spi_file;
 static uint8_t spi_mode;
 static uint8_t spi_bitsPerWord;
 static uint32_t  spi_speed;
-
+static struct sensor_data ACCEL_ERROR = {0};
+static struct sensor_data GYRO_ERROR = {0};
 /**
  * @brief Opens SPI bus
  * 
@@ -312,6 +313,67 @@ uint8_t write_registar(unsigned char reg, unsigned char val)
 
     printf("Reg: %x\n", data[0]);
     printf("Value: %x\n", data[1]);
+
+    return 0;
+}
+
+/**
+ * @brief Gets the error correction values for accel and gyro
+ * 
+ * @return uint8_t (0 - on success; 1 - on failure)
+ */
+uint8_t calculate_error()
+{
+    uint8_t i;
+    uint8_t ret_val;
+
+    while (i < 200)
+    {
+        ret_val = read_accel_xyz();
+
+        if (ret_val != 0)
+        {
+            printf("Error occurred while reading accel regs.\n");
+            return 1;
+        }
+                                        
+        ACCEL_ERROR.x = ACCEL_ERROR.x + ((atan(ACCEL_XYZ.y) / sqrt(pow(ACCEL_XYZ.x, 2) + pow(ACCEL_XYZ.z, 2)))) / 180 * M_PI;
+        ACCEL_ERROR.y = ACCEL_ERROR.y + ((atan(-1 * (ACCEL_XYZ.x) / sqrt(pow((ACCEL_XYZ.y), 2) + pow((ACCEL_XYZ.z), 2))) * 180 / M_PI));
+
+        i++;
+    }
+
+    ACCEL_ERROR.x = ACCEL_ERROR.x / 200;
+    ACCEL_ERROR.y = ACCEL_ERROR.y / 200;
+
+    i = 0;
+
+    while (i < 200)
+    {
+        ret_val = read_gyro_xyz();
+
+        if (ret_val != 0)
+        {
+            printf("Error occurred while reading gyro regs.\n");
+            return 1;
+        }
+
+        GYRO_ERROR.x = GYRO_ERROR.x + GYRO_XYZ.x;
+        GYRO_ERROR.y = GYRO_ERROR.y + GYRO_XYZ.y;
+        GYRO_ERROR.z = GYRO_ERROR.z + GYRO_XYZ.z;
+
+        i++;
+    }
+
+    GYRO_ERROR.x = GYRO_ERROR.x / 200;
+    GYRO_ERROR.y = GYRO_ERROR.y / 200;
+    GYRO_ERROR.z = GYRO_ERROR.z / 200;
+    
+    printf("Accel error:\n");
+    printf("X: %.8f Y: %.8f Z: %.8f \n\n", ACCEL_ERROR.x, ACCEL_ERROR.y, ACCEL_ERROR.z);
+
+    printf("Gyro error:\n");
+    printf("X: %.8f Y: %.8f Z: %.8f \n\n", GYRO_ERROR.x, GYRO_ERROR.y, GYRO_ERROR.z);
 
     return 0;
 }
