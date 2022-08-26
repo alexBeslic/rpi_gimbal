@@ -8,7 +8,7 @@
 
 /* Meta Information */
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Ja");
+MODULE_AUTHOR("Nas trojica");
 MODULE_DESCRIPTION("A simple driver to access the Hardware PWM IP");
 
 /* Variables for device and device class */
@@ -16,7 +16,7 @@ static dev_t my_device_nr;
 static struct class *my_class;
 static struct cdev my_device;
 
-#define DRIVER_NAME "my_pwm_driver"
+#define DRIVER_NAME "servo_driver"
 #define DRIVER_CLASS "MyModuleClass"
 
 /* Variables for pwm  */
@@ -28,25 +28,20 @@ u32 pwm_period = 20000000;
  * @brief Write data to buffer
  */
 static ssize_t driver_write(struct file *File, const char *user_buffer, size_t count, loff_t *offs) {
-	int to_copy, not_copied, delta;
+	int not_copied;
 	long pom;
 	char value[10];
-	
-	/* Get amount of data to copy */
-	to_copy = min(count, sizeof(value));
 
 	/* Copy data to user */
 	not_copied = copy_from_user(value, user_buffer, count);
 	value[count-1] = 0x00;
 	kstrtol(value, 10, &pom);
+	
 	/* Set PWM on time */
-	if(pom < 0 && pom > 100)
+	if(pom < 0 && pom > 195)
 		printk("Invalid Value\n");
 	else
-		pwm_config(pwm0, pwm_on_time/100 * pom + 670000, pwm_period);
-	
-	/* Calculate data */
-	delta = to_copy - not_copied;
+		pwm_config(pwm0, pwm_on_time/195 * pom + 670000, pwm_period);
 
 	return count;
 }
