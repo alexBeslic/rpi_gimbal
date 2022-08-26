@@ -11,6 +11,8 @@
 
 #include "accel_gyro.h"
 
+
+
 static char *spi_dev_name = (char*)"/dev/spidev0.0";
 static int spi_file;
 static uint8_t spi_mode;
@@ -18,6 +20,11 @@ static uint8_t spi_bitsPerWord;
 static uint32_t  spi_speed;
 static struct sensor_data ACCEL_ERROR = {0.00037992, -0.20791744, 0.00};
 static struct sensor_data GYRO_ERROR = {0.34698471, 0.64114493, -0.28187019};
+struct sensor_data acc_angle;
+struct sensor_data gyro_angle;
+struct sensor_data angles;
+struct timeval te;
+long long curr_time = 0, prev_time = 0, elip_time = 0;
 /**
  * @brief Opens SPI bus
  * 
@@ -128,6 +135,8 @@ uint8_t sensor_config()
         printf("Error occurred while reading for SPI bus\n");
         return EXIT_FAILURE;
     }
+    
+    curr_time = current_time();
 
     return 0;
 }
@@ -376,5 +385,44 @@ uint8_t calculate_error()
     printf("X: %.8f Y: %.8f Z: %.8f \n\n", GYRO_ERROR.x, GYRO_ERROR.y, GYRO_ERROR.z);
 
     return 0;
+}
+
+long long current_time()
+{
+	gettimeofday(&te, NULL);
+	long long ms = te.tv_sec*1000LL + te.tv_usec/1000;
+	return ms;
+}
+
+void getAngles()
+{
+	read_accel_xyz();
+	
+	acc_angle.x = (((atan(ACCEL_XYZ.y) / sqrt(pow(ACCEL_XYZ.x, 2) + pow(ACCEL_XYZ.z, 2)))) / 180 * M_PI) - ACCEL_ERROR.x;
+	acc_angle.y = ((atan(-1 * (ACCEL_XYZ.x) / sqrt(pow((ACCEL_XYZ.y), 2) + pow((ACCEL_XYZ.z), 2))) * 180 / M_PI)) - ACCEL_ERROR.y;
+	
+	prev_time = curr_time;
+	curr_time = current_time();
+	elip_time = (curr_time - prev_time)/1000;
+	printf("Elipt time: %lld\n", elip_time);
+	
+	read_gyro_xyz();
+	
+	GYRO_XYZ.x -= GYRO_ERROR.x;
+	GYRO_XYZ.y -= GYRO_ERROR.y;
+	GYRO_XYZ.z -= GYRO_ERROR.z;
+	
+	gyro_angle.x += GYRO_XYZ.x*elip_time;
+	gyro_angle.y += GYRO_XYZ.y*elip_time;
+	gyro_angle.z += GYRO_XYZ.z*elip_time;
+	
+	angles.x = 0.96*gyro_angle.x + 0.04*acc_angle.x;
+	angles.y = 0.96*gyro_angle.y + 0.04*acc_angle.y;
+	angles.z = gyro_angle.z;
+	
+	gyro_angle.x = angles.x;
+	gyro_angle.y = angles.y;
+	
+	printf("Ugao x: %f, Ugao y: %f, Ugao z: %f\n", angles.x, angles.y, angles.z);
 }
 

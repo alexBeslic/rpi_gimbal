@@ -28,26 +28,27 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    ret = calculate_error();
+    /*ret = calculate_error();
 
     if (ret != 0)
     {
         printf("Error occurred while configuring accel\n");
         return EXIT_FAILURE;
-    }
+    }*/
 
     
     while (1)
     {
-        ret = read_accel_xyz();
+        /*ret = read_accel_xyz();
         printf("Accel status: %d\n", ret);
         printf("X: %.8f Y: %.8f Z: %.8f \n\n", ACCEL_XYZ.x, ACCEL_XYZ.y, ACCEL_XYZ.z);
 
         ret = read_gyro_xyz();
         printf("Gyro status: %d\n", ret);
-        printf("X: %.8f Y: %.8f Z: %.8f \n\n", GYRO_XYZ.x, GYRO_XYZ.y, GYRO_XYZ.z);
-
-        sleep(1);
+        printf("X: %.8f Y: %.8f Z: %.8f \n\n", GYRO_XYZ.x, GYRO_XYZ.y, GYRO_XYZ.z);*/
+        getAngles();
+		fflush(stdout);
+        //sleep(1);
     }
     
 }

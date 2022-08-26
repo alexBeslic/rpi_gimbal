@@ -11,6 +11,7 @@
 #include <sys/ioctl.h>
 #include <linux/types.h>
 #include <linux/spi/spidev.h>
+#include <sys/time.h>
 
 #define READ_BIT(b) ((0x80) | (b)) /* Sets the fisrt bit to 1*/
 
@@ -48,5 +49,7 @@ uint8_t read_whoami();
 uint8_t read_registar(unsigned char);
 uint8_t write_registar(unsigned char, unsigned char);
 uint8_t calculate_error();
+long long current_time();
+void getAngles();
 
 #endif
