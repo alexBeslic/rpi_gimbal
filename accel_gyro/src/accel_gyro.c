@@ -22,7 +22,6 @@ static struct sensor_data ACCEL_ERROR = {0.00037992, -0.20791744, 0.00};
 static struct sensor_data GYRO_ERROR = {0.34698471, 0.64114493, -0.28187019};
 struct sensor_data acc_angle;
 struct sensor_data gyro_angle;
-struct sensor_data angles;
 struct timeval te;
 long long curr_time = 0, prev_time = 0, elip_time = 0;
 /**
@@ -130,6 +129,20 @@ uint8_t sensor_config()
     // Write all zeros to POWER MANAGEMENT 1 (Sleep mode off)
 	ret_val = write_registar(PWR_MGMT_1_ADDR, 0x00);
 
+    if (ret_val != 0)
+    {
+        printf("Error occurred while reading for SPI bus\n");
+        return EXIT_FAILURE;
+    }
+    
+    ret_val = write_registar(ACCEL_CTRL1_ADDR, 0x11);
+    if (ret_val != 0)
+    {
+        printf("Error occurred while reading for SPI bus\n");
+        return EXIT_FAILURE;
+    }
+    
+    ret_val = write_registar(GYRO_CTRL_ADDR, 0x11);
     if (ret_val != 0)
     {
         printf("Error occurred while reading for SPI bus\n");
@@ -312,6 +325,10 @@ uint8_t write_registar(unsigned char reg, unsigned char val)
 
     data[0] = 0x00 | reg;
     data[1] = val;
+    
+    printf("Reg: %x\n", data[0]);
+    printf("Value: %x\n", data[1]);
+    
     ret_val = spi_read_write(data, 2);
 
     if (ret_val != 0)
@@ -320,8 +337,6 @@ uint8_t write_registar(unsigned char reg, unsigned char val)
         return 1;
     }
 
-    printf("Reg: %x\n", data[0]);
-    printf("Value: %x\n", data[1]);
 
     return 0;
 }
@@ -404,7 +419,6 @@ void getAngles()
 	prev_time = curr_time;
 	curr_time = current_time();
 	elip_time = (curr_time - prev_time)/1000;
-	printf("Elipt time: %lld\n", elip_time);
 	
 	read_gyro_xyz();
 	
@@ -423,6 +437,5 @@ void getAngles()
 	gyro_angle.x = angles.x;
 	gyro_angle.y = angles.y;
 	
-	printf("Ugao x: %f, Ugao y: %f, Ugao z: %f\n", angles.x, angles.y, angles.z);
 }
 

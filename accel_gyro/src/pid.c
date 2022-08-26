@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <semaphore.h>
-#include <signal.h>
 #include "accel_gyro.h"
 static char *servo_file_name = (char*)"/dev/servo_driver";
 /*
@@ -12,9 +11,7 @@ static char *servo_file_name = (char*)"/dev/servo_driver";
     arm-linux-gnueabihf-gcc -Wall accel_gyro.c accel_test_.c -lm -o who
 */
 
-double beta;
-double trsh = 4.0;
-int flag = 1;
+float beta;
 //sem_t sem_senzor;
 
 /*void* senzor(void* arg)
@@ -35,25 +32,22 @@ int flag = 1;
     return 0;
 }
 */
-void close_me(int i)
-{
-	flag = 0;
-}
+float pid_p,pid_i, pid_d;
+float p=4.0,i=0.1,d=0.1;
+float error, previous_error;
+float pid_u;
+
+long long p_time,c_time,e_time;
+
 
 int main(int argc, char **argv)
 {
-	signal(SIGINT, close_me);
-	
     uint8_t ret;
     //pthread_t p_senzor;
     float alfa = atof(argv[1]);
     int srednje = atoi(argv[2]);
-    int ker = atoi(argv[3]);
     int kernel = 0;
-    double pom;
     //sem_init(&sem_senzor, 0, 0);
-    
-    ret = system("sudo insmod pwm_driver.ko");
     
     char buff[10];
     sprintf(buff, "%d", kernel);
@@ -92,42 +86,43 @@ int main(int argc, char **argv)
 	//sem_post(&sem_senzor);
     //pthread_create(&p_senzor, NULL, senzor, NULL);
     sleep(3);
-    while (flag)
+    while (1)
     {
-		//sem_wait(&sem_senzor);
-		
-		pom = 0;
+		float pom = 0;
 		for(int i = 0; i < srednje; i++){
 			getAngles();
 			pom += angles.y;
 		}
-		printf("pom: %f agels: %f beta: %f\n", pom, angles.y, beta);
-		beta = pom/((double) srednje);
+		printf("pom: %f\n", pom);
+		beta = pom/((float) srednje);
 		//printf("Beta: %f\n", beta);
 		fflush(stdout);
 		
-		if((beta - alfa) < (trsh * (-1.0)) || (beta - alfa) > trsh)
-		{
-			if((int) alfa > (int) beta)
-			{
-				kernel -= ker;
-				sprintf(buff, "%d", kernel);
-				write(file_dsc, buff, 10);
-			}
-			else if((int)alfa < (int)beta)
-			{
-				kernel += ker;
-				sprintf(buff, "%d", kernel);
-				write(file_dsc, buff, 10);
-			}
+		//sem_wait(&sem_senzor);
+		p_time = c_time;
+		c_time = current_time();
+		e_time = (c_time - p_time)/1000;
+		
+		error=beta-alfa;
+		pid_p=p*error;
+		pid_d=d*(error-previous_error)/e_time;
+		
+		if(-3<error && error< 3){
+				pid_i=pid_i+(i*error);
 		}
+		
+		pid_u=pid_i+pid_d+pid_p;
+		
+		previous_error = error;
+		
+		
+		
+		
+		sprintf(buff, "%d", (int)pid_u + 90);
+		write(file_dsc, buff, 10);
 		
 		//sem_post(&sem_senzor);
 		//usleep(10);
     }
     
-    close(file_dsc);
-    system("sudo rmmod pwm_driver");
-    
-    return 0;
 }

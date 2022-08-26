@@ -39,6 +39,7 @@ __attribute__((section("__versions"))) = {
 	{ 0xbee66127, __VMLINUX_SYMBOL_STR(pwm_apply_state) },
 	{ 0x11a13e31, __VMLINUX_SYMBOL_STR(_kstrtol) },
 	{ 0x28cc25db, __VMLINUX_SYMBOL_STR(arm_copy_from_user) },
+	{ 0xe707d823, __VMLINUX_SYMBOL_STR(__aeabi_uidiv) },
 	{ 0x2e5810c6, __VMLINUX_SYMBOL_STR(__aeabi_unwind_cpp_pr1) },
 	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
 	{ 0xb1ad28e0, __VMLINUX_SYMBOL_STR(__gnu_mcount_nc) },
@@ -50,4 +51,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "7B25AF85C782F2ECEF7F05F");
+MODULE_INFO(srcversion, "3F81F9A17160DCF0021B1BC");

@@ -23,25 +23,26 @@ static struct cdev my_device;
 struct pwm_device *pwm0 = NULL;
 u32 pwm_on_time = 1830000;
 u32 pwm_period = 20000000;
+u32 osjetljivost = 195;
 
 /**
  * @brief Write data to buffer
  */
 static ssize_t driver_write(struct file *File, const char *user_buffer, size_t count, loff_t *offs) {
-	int not_copied;
+	int not_copied, ret;
 	long pom;
 	char value[10];
 
 	/* Copy data to user */
 	not_copied = copy_from_user(value, user_buffer, count);
 	value[count-1] = 0x00;
-	kstrtol(value, 10, &pom);
+	ret = kstrtol(value, 10, &pom);
 	
 	/* Set PWM on time */
-	if(pom < 0 && pom > 195)
+	if(pom < 0 && pom > osjetljivost)
 		printk("Invalid Value\n");
 	else
-		pwm_config(pwm0, pwm_on_time/195 * pom + 670000, pwm_period);
+		pwm_config(pwm0, pwm_on_time/osjetljivost * pom + 670000, pwm_period);
 
 	return count;
 }
