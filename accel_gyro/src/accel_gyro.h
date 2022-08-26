@@ -21,6 +21,7 @@
 #define ACCEL_XOUT_H_ADDR   0x3B // 6B to read
 #define GYRO_XOUT_H_ADDR    0x43 // 6B to read
 #define PWR_MGMT_1_ADDR 	0x6B
+#define M_PI 3.14159
 
 /* Coversion const*/
 #define ACCEL_CONV_CONST	16384.00 // Units LSB/g 

@@ -16,8 +16,8 @@ static int spi_file;
 static uint8_t spi_mode;
 static uint8_t spi_bitsPerWord;
 static uint32_t  spi_speed;
-static struct sensor_data ACCEL_ERROR = {0};
-static struct sensor_data GYRO_ERROR = {0};
+static struct sensor_data ACCEL_ERROR = {0.00037992, -0.20791744, 0.00};
+static struct sensor_data GYRO_ERROR = {0.34698471, 0.64114493, -0.28187019};
 /**
  * @brief Opens SPI bus
  * 
@@ -377,3 +377,4 @@ uint8_t calculate_error()
 
     return 0;
 }
+
