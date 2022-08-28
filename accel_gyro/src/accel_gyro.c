@@ -135,14 +135,14 @@ uint8_t sensor_config()
         return EXIT_FAILURE;
     }
     
-    ret_val = write_registar(ACCEL_CTRL1_ADDR, 0x11);
+    ret_val = write_registar(ACCEL_CTRL1_ADDR, ACCEL_CTRL1_CONF);
     if (ret_val != 0)
     {
         printf("Error occurred while reading for SPI bus\n");
         return EXIT_FAILURE;
     }
     
-    ret_val = write_registar(GYRO_CTRL_ADDR, 0x11);
+    ret_val = write_registar(GYRO_CTRL_ADDR, GYRO_CTRL_CONF);
     if (ret_val != 0)
     {
         printf("Error occurred while reading for SPI bus\n");
@@ -278,7 +278,7 @@ uint8_t read_gyro_xyz()
         return 1;
     }
 
-    printf("First byte: %x\n", data[0]);
+    printf("Reg: %x\n", data[0]);
     printf("Who am I: %x\n", data[1]);
 
     return 0;
@@ -287,7 +287,7 @@ uint8_t read_gyro_xyz()
 /**
  * @brief Reads 1B from a register
  * 
- * @param reg 
+ * @param reg Address
  * @return uint8_t (0 - on success; 1 - on failure)
  */
 uint8_t read_registar(unsigned char reg)
@@ -314,8 +314,8 @@ uint8_t read_registar(unsigned char reg)
 /**
  * @brief Writes 1B to a register
  * 
- * @param reg 
- * @param val 
+ * @param reg Address
+ * @param val Value
  * @return uint8_t (0 - on success; 1 - on failure)
  */
 uint8_t write_registar(unsigned char reg, unsigned char val)
@@ -402,6 +402,11 @@ uint8_t calculate_error()
     return 0;
 }
 
+/**
+ * @brief Gets current time
+ * 
+ * @return long long time in miliseconds
+ */
 long long current_time()
 {
 	gettimeofday(&te, NULL);
@@ -409,6 +414,10 @@ long long current_time()
 	return ms;
 }
 
+/**
+ * @brief Get the Angles object
+ * 
+ */
 void getAngles()
 {
 	read_accel_xyz();

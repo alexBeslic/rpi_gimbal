@@ -22,11 +22,21 @@ int main(int argc, char **argv)
     
     sensor_config();
     
-    if(argc == 3){
+    if(argc == 3)
+    {
 		ret = write_registar((unsigned char)atoi(argv[1]), (unsigned char)atoi(argv[2]));
 		sleep(1);
 	}
-    ret = read_registar((unsigned char)atoi(argv[1]));
+
+    if(argc == 1)
+    {
+        ret = read_registar(WHOAMI_ADDR);
+    }
+    else
+    {
+        ret = read_registar((unsigned char)atoi(argv[1]));
+    }
+    
 
     if (ret != 0)
     {

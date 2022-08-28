@@ -15,6 +15,8 @@
 
 #define READ_BIT(b) ((0x80) | (b)) /* Sets the fisrt bit to 1*/
 
+/* Register Address*/
+
 #define WHOAMI_ADDR         0x75 // 8-bit device ID (0x03)
 #define GYRO_CTRL_ADDR 		0x1B
 #define ACCEL_CTRL1_ADDR	0x1C
@@ -22,9 +24,14 @@
 #define ACCEL_XOUT_H_ADDR   0x3B // 6B to read
 #define GYRO_XOUT_H_ADDR    0x43 // 6B to read
 #define PWR_MGMT_1_ADDR 	0x6B
-//#define M_PI 3.14159
+
+/* Register Configuration*/
+
+#define ACCEL_CTRL1_CONF    0x18 // Full scale 16 g
+#define GYRO_CTRL_CONF      0x18 // Full scale 2000 dps
 
 /* Coversion const*/
+
 #define ACCEL_CONV_CONST	2048.00 // Units LSB/g 
 #define GYRO_CONV_CONST     16.4 // Units LSB/(dps)
 
@@ -38,7 +45,7 @@ struct sensor_data
 
 volatile struct sensor_data ACCEL_XYZ;
 volatile struct sensor_data GYRO_XYZ;
-struct sensor_data angles;
+volatile struct sensor_data angles;
 
 
 
