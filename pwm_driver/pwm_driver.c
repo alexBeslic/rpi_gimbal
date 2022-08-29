@@ -1,6 +1,6 @@
 /**
  * @file pwm_driver.c
- * @author Nikola Cetić (you@domain.com)
+ * @author Nikola Cetić (nikolacetic8@gmail.com)
  * @brief Driver module for PWM driven servo motor bs-422. 
  * @version 0.1
  * @date 2022-08-29
@@ -33,9 +33,10 @@ static struct cdev my_device;
 
 /* Variables for pwm  */
 struct pwm_device *pwm0 = NULL;
-u32 pwm_on_time = 1830000;
-u32 pwm_period = 20000000;
-u32 sensibility = 400;
+u32 pwm_min_duration = 670000; // minimum duration of pwm signal in micro seconds
+u32 pwm_max_duration = 1830000;
+u32 pwm_period = 20000000;// period of signal equivalent to 50Hz
+u32 sensitivity = 400;//means 195 degrees of servo max angle is divided in 400 increments
 
 /**
  * @brief Write data to buffer
@@ -52,10 +53,10 @@ static ssize_t driver_write(struct file *File, const char *user_buffer, size_t c
 	ret = kstrtol(value, 10, &pom);
 	
 	/* Set PWM on time */
-	if(pom < 0 && pom > sensibility)
+	if(pom < 0 && pom > sensitivity)
 		printk("Invalid Value\n");
 	else
-		pwm_config(pwm0, pwm_on_time/sensibility * pom + 670000, pwm_period);
+		pwm_config(pwm0, pwm_max_duration/sensitivity * pom + pwm_min_duration, pwm_period);
 
 	return count;
 }
@@ -123,7 +124,7 @@ static int __init ModuleInit(void) {
 		goto AddError;
 	}
 
-	pwm_config(pwm0, pwm_on_time + 670000, pwm_period);
+	pwm_config(pwm0,pwm_min_duration, pwm_period);
 	pwm_enable(pwm0);
 
 	return 0;

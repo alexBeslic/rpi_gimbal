@@ -1,0 +1,87 @@
+\hypertarget{accel__gyro_8h_source}{}\doxysection{accel\+\_\+gyro.\+h}
+\label{accel__gyro_8h_source}\index{src/accel\_gyro.h@{src/accel\_gyro.h}}
+\mbox{\hyperlink{accel__gyro_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#ifndef ACCEL\_GYRO\_H\_INCLUDED}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define ACCEL\_GYRO\_H\_INCLUDED}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <stdio.h>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <stdint.h>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include <unistd.h>}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include <string.h>}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include <math.h>}}
+\DoxyCodeLine{20 \textcolor{preprocessor}{\#include <fcntl.h>}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include <sys/ioctl.h>}}
+\DoxyCodeLine{22 \textcolor{preprocessor}{\#include <linux/types.h>}}
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#include <linux/spi/spidev.h>}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#include <sys/time.h>}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{preprocessor}{\#define READ\_BIT(b) ((0x80) | (b)) }\textcolor{comment}{/* Sets the fisrt bit to 1*/}\textcolor{preprocessor}{}}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{comment}{/* Register Address*/}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#define WHOAMI\_ADDR         0x75 }\textcolor{comment}{// 8-\/bit device ID (0x03)}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#define GYRO\_CTRL\_ADDR      0x1B}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#define ACCEL\_CTRL1\_ADDR    0x1C}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#define ACCEL\_CTRL2\_ADDR    0x1D}}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#define ACCEL\_XOUT\_H\_ADDR   0x3B}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#define ACCEL\_XOUT\_L\_ADDR   0x3C}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#define ACCEL\_YOUT\_H\_ADDR   0x3D}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#define ACCEL\_YOUT\_L\_ADDR   0x3E}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#define ACCEL\_ZOUT\_H\_ADDR   0x3F}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#define ACCEL\_ZOUT\_L\_ADDR   0x40}}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#define GYRO\_XOUT\_H\_ADDR    0x43}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#define GYRO\_XOUT\_L\_ADDR    0x44}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#define GYRO\_YOUT\_H\_ADDR    0x45}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#define GYRO\_YOUT\_L\_ADDR    0x46}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#define GYRO\_ZOUT\_H\_ADDR    0x47}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#define GYRO\_ZOUT\_L\_ADDR    0x48}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#define PWR\_MGMT\_1\_ADDR     0x6B}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \textcolor{comment}{/* Register Configuration*/}}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#define ACCEL\_CTRL1\_CONF    0x18 }\textcolor{comment}{// Full scale 16 g}}
+\DoxyCodeLine{54 \textcolor{preprocessor}{\#define GYRO\_CTRL\_CONF      0x18 }\textcolor{comment}{// Full scale 2000 dps}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 \textcolor{comment}{/* Coversion const*/}}
+\DoxyCodeLine{57 }
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#define ACCEL\_CONV\_CONST    2048.00 }\textcolor{comment}{// Units LSB/g }}
+\DoxyCodeLine{59 \textcolor{preprocessor}{\#define GYRO\_CONV\_CONST     16.4 }\textcolor{comment}{// Units LSB/(dps)}}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 \textcolor{comment}{// Struct definition}}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63 \textcolor{keyword}{struct }\mbox{\hyperlink{structsensor__data}{sensor\_data}}}
+\DoxyCodeLine{64 \{}
+\DoxyCodeLine{65     \textcolor{keywordtype}{float} x;}
+\DoxyCodeLine{66     \textcolor{keywordtype}{float} y;}
+\DoxyCodeLine{67     \textcolor{keywordtype}{float} z;}
+\DoxyCodeLine{68 \};}
+\DoxyCodeLine{69 }
+\DoxyCodeLine{70 \textcolor{keyword}{volatile} \textcolor{keyword}{struct }\mbox{\hyperlink{structsensor__data}{sensor\_data}} ACCEL\_XYZ; \textcolor{comment}{// Accel XYZ data (g)}}
+\DoxyCodeLine{71 \textcolor{keyword}{volatile} \textcolor{keyword}{struct }\mbox{\hyperlink{structsensor__data}{sensor\_data}} GYRO\_XYZ;  \textcolor{comment}{// Gyro XYZ data (dsp)}}
+\DoxyCodeLine{72 \textcolor{keyword}{volatile} \textcolor{keyword}{struct }\mbox{\hyperlink{structsensor__data}{sensor\_data}} angles;    \textcolor{comment}{// XYZ angels (in degrees)}}
+\DoxyCodeLine{73 }
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 \textcolor{comment}{// Function declaration}}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{78 uint8\_t \mbox{\hyperlink{accel__gyro_8h_ad836fed344e03cc6d866386f7af7eb59}{open\_spi\_bus}}();}
+\DoxyCodeLine{79 uint8\_t \mbox{\hyperlink{accel__gyro_8h_abc94bc066cbfa50dd6112fdefe01d8bc}{close\_spi\_bus}}();}
+\DoxyCodeLine{80 uint8\_t \mbox{\hyperlink{accel__gyro_8h_aa1ec2637ab52ec869f59a6d28c9e6778}{sensor\_config}}();}
+\DoxyCodeLine{81 uint8\_t \mbox{\hyperlink{accel__gyro_8h_a514d1d933a7f8b5e6a610edc8ecd5bf7}{read\_accel\_xyz}}();}
+\DoxyCodeLine{82 uint8\_t \mbox{\hyperlink{accel__gyro_8h_a54ff564d04a24c734d6f4442a109c5a9}{read\_gyro\_xyz}}();}
+\DoxyCodeLine{83 uint8\_t \mbox{\hyperlink{accel__gyro_8h_a55dd7740395cefc7771330f5db17ca1a}{read\_whoami}}();}
+\DoxyCodeLine{84 uint8\_t \mbox{\hyperlink{accel__gyro_8h_aecd4d40022e855b9c59e4487dca2dd1b}{read\_registar}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char});}
+\DoxyCodeLine{85 uint8\_t \mbox{\hyperlink{accel__gyro_8h_a76a9b6beed2713cff20db426a2c71510}{write\_registar}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char});}
+\DoxyCodeLine{86 uint8\_t \mbox{\hyperlink{accel__gyro_8h_a0f43b2f3809519696e6988217d83b99f}{calculate\_error}}();}
+\DoxyCodeLine{87 \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \mbox{\hyperlink{accel__gyro_8h_ab740a03eaac6bf7f0bb65d94af2035e5}{current\_time}}();}
+\DoxyCodeLine{88 \textcolor{keywordtype}{void} \mbox{\hyperlink{accel__gyro_8h_a16cdc2a9f144c80a554cd6e27f07c4c9}{getAngles}}();}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

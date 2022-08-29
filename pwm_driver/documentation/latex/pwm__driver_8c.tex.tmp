@@ -1,0 +1,78 @@
+\hypertarget{pwm__driver_8c}{}\doxysection{pwm\+\_\+driver/pwm\+\_\+driver.c File Reference}
+\label{pwm__driver_8c}\index{pwm\_driver/pwm\_driver.c@{pwm\_driver/pwm\_driver.c}}
+
+
+Driver module for PWM driven servo motor bs-\/422.  
+
+
+{\ttfamily \#include $<$linux/module.\+h$>$}\newline
+{\ttfamily \#include $<$linux/init.\+h$>$}\newline
+{\ttfamily \#include $<$linux/fs.\+h$>$}\newline
+{\ttfamily \#include $<$linux/cdev.\+h$>$}\newline
+{\ttfamily \#include $<$linux/uaccess.\+h$>$}\newline
+{\ttfamily \#include $<$linux/pwm.\+h$>$}\newline
+{\ttfamily \#include $<$linux/kernel.\+h$>$}\newline
+Include dependency graph for pwm\+\_\+driver.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{pwm__driver_8c_a25634d21648ca7fb7a2aca614bafaaeb}\label{pwm__driver_8c_a25634d21648ca7fb7a2aca614bafaaeb}} 
+\#define {\bfseries DRIVER\+\_\+\+NAME}~\char`\"{}servo\+\_\+driver\char`\"{}
+\item 
+\mbox{\Hypertarget{pwm__driver_8c_a4450e0d7fb5e48a46f4c85848304d393}\label{pwm__driver_8c_a4450e0d7fb5e48a46f4c85848304d393}} 
+\#define {\bfseries DRIVER\+\_\+\+CLASS}~\char`\"{}My\+Module\+Class\char`\"{}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{pwm__driver_8c_ad94b36675e7eb067ea3ce6ff9e244a44}\label{pwm__driver_8c_ad94b36675e7eb067ea3ce6ff9e244a44}} 
+{\bfseries MODULE\+\_\+\+LICENSE} (\char`\"{}GPL\char`\"{})
+\item 
+\mbox{\Hypertarget{pwm__driver_8c_afad173ecb7078d4c431f93db191c5ffa}\label{pwm__driver_8c_afad173ecb7078d4c431f93db191c5ffa}} 
+{\bfseries MODULE\+\_\+\+AUTHOR} (\char`\"{}rpi\+\_\+gimbal\char`\"{})
+\item 
+\mbox{\Hypertarget{pwm__driver_8c_a0cce6c7b66d9bc9bcec6e3dfd01ecc2c}\label{pwm__driver_8c_a0cce6c7b66d9bc9bcec6e3dfd01ecc2c}} 
+{\bfseries MODULE\+\_\+\+DESCRIPTION} (\char`\"{}A simple driver to access the Hardware PWM IP\char`\"{})
+\item 
+\mbox{\Hypertarget{pwm__driver_8c_abc26546db50b83c14dc737b0d9075d66}\label{pwm__driver_8c_abc26546db50b83c14dc737b0d9075d66}} 
+{\bfseries module\+\_\+init} (Module\+Init)
+\item 
+\mbox{\Hypertarget{pwm__driver_8c_a0a26c88755d5440a863bfea4099a395e}\label{pwm__driver_8c_a0a26c88755d5440a863bfea4099a395e}} 
+{\bfseries module\+\_\+exit} (Module\+Exit)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{pwm__driver_8c_a4293c5f636b3b3cdf0343b7b7aedecda}\label{pwm__driver_8c_a4293c5f636b3b3cdf0343b7b7aedecda}} 
+struct pwm\+\_\+device $\ast$ {\bfseries pwm0} = NULL
+\item 
+\mbox{\Hypertarget{pwm__driver_8c_ab0e85b1d2fab1389ce057339644fb6d7}\label{pwm__driver_8c_ab0e85b1d2fab1389ce057339644fb6d7}} 
+u32 {\bfseries pwm\+\_\+min\+\_\+duration} = 670000
+\item 
+\mbox{\Hypertarget{pwm__driver_8c_a52a13acc6bd445ea31b5454e4eef10f7}\label{pwm__driver_8c_a52a13acc6bd445ea31b5454e4eef10f7}} 
+u32 {\bfseries pwm\+\_\+max\+\_\+duration} = 1830000
+\item 
+\mbox{\Hypertarget{pwm__driver_8c_aac75fce701938f4d591bd9a2197675e6}\label{pwm__driver_8c_aac75fce701938f4d591bd9a2197675e6}} 
+u32 {\bfseries pwm\+\_\+period} = 20000000
+\item 
+\mbox{\Hypertarget{pwm__driver_8c_ad077826f59029468787e5365fa2cf1dc}\label{pwm__driver_8c_ad077826f59029468787e5365fa2cf1dc}} 
+u32 {\bfseries sensitivity} = 400
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Driver module for PWM driven servo motor bs-\/422. 
+
+\begin{DoxyAuthor}{Author}
+Nikola Cetić (\href{mailto:nikolacetic8@gmail.com}{\texttt{ nikolacetic8@gmail.\+com}}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/08-\/29
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}

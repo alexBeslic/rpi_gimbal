@@ -1,0 +1,250 @@
+\hypertarget{accel__gyro_8c}{}\doxysection{src/accel\+\_\+gyro.c File Reference}
+\label{accel__gyro_8c}\index{src/accel\_gyro.c@{src/accel\_gyro.c}}
+
+
+Library for 6DOF IMU 5 CLICK(ICM-\/20789). Uses SPI bus to interface with the sensor.  
+
+
+{\ttfamily \#include \char`\"{}accel\+\_\+gyro.\+h\char`\"{}}\newline
+Include dependency graph for accel\+\_\+gyro.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{accel__gyro_8c_ad836fed344e03cc6d866386f7af7eb59}{open\+\_\+spi\+\_\+bus}} ()
+\begin{DoxyCompactList}\small\item\em Opens SPI bus. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{accel__gyro_8c_abc94bc066cbfa50dd6112fdefe01d8bc}{close\+\_\+spi\+\_\+bus}} ()
+\begin{DoxyCompactList}\small\item\em Closes SPI bus. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{accel__gyro_8c_a044b5607675c5e986448abbafbdef3fa}{spi\+\_\+read\+\_\+write}} (uint8\+\_\+t $\ast$data, int length)
+\begin{DoxyCompactList}\small\item\em Transfers data on the SPI interface. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{accel__gyro_8c_aa1ec2637ab52ec869f59a6d28c9e6778}{sensor\+\_\+config}} ()
+\begin{DoxyCompactList}\small\item\em Configurs sensor. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{accel__gyro_8c_a514d1d933a7f8b5e6a610edc8ecd5bf7}{read\+\_\+accel\+\_\+xyz}} ()
+\begin{DoxyCompactList}\small\item\em Reads Accel XYZ and puts them in ACCEL\+\_\+\+XYZ. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{accel__gyro_8c_a54ff564d04a24c734d6f4442a109c5a9}{read\+\_\+gyro\+\_\+xyz}} ()
+\begin{DoxyCompactList}\small\item\em Reads Gyro XYZ and puts them in GYRO\+\_\+\+XYZ. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{accel__gyro_8c_a55dd7740395cefc7771330f5db17ca1a}{read\+\_\+whoami}} ()
+\begin{DoxyCompactList}\small\item\em Reads Who am I reg. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{accel__gyro_8c_a39559b621d5750604b7bc9b42bbebe68}{read\+\_\+registar}} (unsigned char reg)
+\begin{DoxyCompactList}\small\item\em Reads 1B from a register. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{accel__gyro_8c_a01c573e0e8286b1c3a4335b3d2280ee7}{write\+\_\+registar}} (unsigned char reg, unsigned char val)
+\begin{DoxyCompactList}\small\item\em Writes 1B to a register. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{accel__gyro_8c_a0f43b2f3809519696e6988217d83b99f}{calculate\+\_\+error}} ()
+\begin{DoxyCompactList}\small\item\em Gets the error correction values for accel and gyro. Puts them in ACCEL\+\_\+\+ERROR and GYRO\+\_\+\+ERROR. Sensor needs to be completely flat. \end{DoxyCompactList}\item 
+long long \mbox{\hyperlink{accel__gyro_8c_ab740a03eaac6bf7f0bb65d94af2035e5}{current\+\_\+time}} ()
+\begin{DoxyCompactList}\small\item\em Gets current time in miliseconds. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{accel__gyro_8c_a16cdc2a9f144c80a554cd6e27f07c4c9}{get\+Angles}} ()
+\begin{DoxyCompactList}\small\item\em Get the Angles object and puts them in angles. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{accel__gyro_8c_a39dfc92fea6b79910e3600d4381a7294}\label{accel__gyro_8c_a39dfc92fea6b79910e3600d4381a7294}} 
+struct \mbox{\hyperlink{structsensor__data}{sensor\+\_\+data}} {\bfseries acc\+\_\+angle}
+\item 
+\mbox{\Hypertarget{accel__gyro_8c_a026eab30a3b78c9bc46b4da10cbe44fa}\label{accel__gyro_8c_a026eab30a3b78c9bc46b4da10cbe44fa}} 
+struct \mbox{\hyperlink{structsensor__data}{sensor\+\_\+data}} {\bfseries gyro\+\_\+angle}
+\item 
+\mbox{\Hypertarget{accel__gyro_8c_ab7423847c3a90792e8e33937fb822e7c}\label{accel__gyro_8c_ab7423847c3a90792e8e33937fb822e7c}} 
+struct timeval {\bfseries te}
+\item 
+\mbox{\Hypertarget{accel__gyro_8c_af7d2f9142583a14245f6071f7eddf5a6}\label{accel__gyro_8c_af7d2f9142583a14245f6071f7eddf5a6}} 
+long long {\bfseries curr\+\_\+time} = 0
+\item 
+\mbox{\Hypertarget{accel__gyro_8c_ac602678419503345229094b635120af2}\label{accel__gyro_8c_ac602678419503345229094b635120af2}} 
+long long {\bfseries prev\+\_\+time} = 0
+\item 
+\mbox{\Hypertarget{accel__gyro_8c_a315f4899412ca7fc08b44d257149a32c}\label{accel__gyro_8c_a315f4899412ca7fc08b44d257149a32c}} 
+long long {\bfseries elip\+\_\+time} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Library for 6DOF IMU 5 CLICK(ICM-\/20789). Uses SPI bus to interface with the sensor. 
+
+\begin{DoxyAuthor}{Author}
+Aleksandar Bešlić (\href{mailto:alex.beslic@gmail.com}{\texttt{ alex.\+beslic@gmail.\+com}}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+8 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/08-\/29
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{accel__gyro_8c_a0f43b2f3809519696e6988217d83b99f}\label{accel__gyro_8c_a0f43b2f3809519696e6988217d83b99f}} 
+\index{accel\_gyro.c@{accel\_gyro.c}!calculate\_error@{calculate\_error}}
+\index{calculate\_error@{calculate\_error}!accel\_gyro.c@{accel\_gyro.c}}
+\doxysubsubsection{\texorpdfstring{calculate\_error()}{calculate\_error()}}
+{\footnotesize\ttfamily uint8\+\_\+t calculate\+\_\+error (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the error correction values for accel and gyro. Puts them in ACCEL\+\_\+\+ERROR and GYRO\+\_\+\+ERROR. Sensor needs to be completely flat. 
+
+\begin{DoxyReturn}{Returns}
+uint8\+\_\+t (0 -\/ on success; 1 -\/ on failure) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{accel__gyro_8c_abc94bc066cbfa50dd6112fdefe01d8bc}\label{accel__gyro_8c_abc94bc066cbfa50dd6112fdefe01d8bc}} 
+\index{accel\_gyro.c@{accel\_gyro.c}!close\_spi\_bus@{close\_spi\_bus}}
+\index{close\_spi\_bus@{close\_spi\_bus}!accel\_gyro.c@{accel\_gyro.c}}
+\doxysubsubsection{\texorpdfstring{close\_spi\_bus()}{close\_spi\_bus()}}
+{\footnotesize\ttfamily uint8\+\_\+t close\+\_\+spi\+\_\+bus (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Closes SPI bus. 
+
+\begin{DoxyReturn}{Returns}
+uint8\+\_\+t (0 -\/ on success; 1 -\/ on failure) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{accel__gyro_8c_ab740a03eaac6bf7f0bb65d94af2035e5}\label{accel__gyro_8c_ab740a03eaac6bf7f0bb65d94af2035e5}} 
+\index{accel\_gyro.c@{accel\_gyro.c}!current\_time@{current\_time}}
+\index{current\_time@{current\_time}!accel\_gyro.c@{accel\_gyro.c}}
+\doxysubsubsection{\texorpdfstring{current\_time()}{current\_time()}}
+{\footnotesize\ttfamily long long current\+\_\+time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets current time in miliseconds. 
+
+\begin{DoxyReturn}{Returns}
+long long time in miliseconds 
+\end{DoxyReturn}
+\mbox{\Hypertarget{accel__gyro_8c_a16cdc2a9f144c80a554cd6e27f07c4c9}\label{accel__gyro_8c_a16cdc2a9f144c80a554cd6e27f07c4c9}} 
+\index{accel\_gyro.c@{accel\_gyro.c}!getAngles@{getAngles}}
+\index{getAngles@{getAngles}!accel\_gyro.c@{accel\_gyro.c}}
+\doxysubsubsection{\texorpdfstring{getAngles()}{getAngles()}}
+{\footnotesize\ttfamily void get\+Angles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the Angles object and puts them in angles. 
+
+\mbox{\Hypertarget{accel__gyro_8c_ad836fed344e03cc6d866386f7af7eb59}\label{accel__gyro_8c_ad836fed344e03cc6d866386f7af7eb59}} 
+\index{accel\_gyro.c@{accel\_gyro.c}!open\_spi\_bus@{open\_spi\_bus}}
+\index{open\_spi\_bus@{open\_spi\_bus}!accel\_gyro.c@{accel\_gyro.c}}
+\doxysubsubsection{\texorpdfstring{open\_spi\_bus()}{open\_spi\_bus()}}
+{\footnotesize\ttfamily uint8\+\_\+t open\+\_\+spi\+\_\+bus (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Opens SPI bus. 
+
+\begin{DoxyReturn}{Returns}
+uint8\+\_\+t (0 -\/ on success; 1 -\/ on failure) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{accel__gyro_8c_a514d1d933a7f8b5e6a610edc8ecd5bf7}\label{accel__gyro_8c_a514d1d933a7f8b5e6a610edc8ecd5bf7}} 
+\index{accel\_gyro.c@{accel\_gyro.c}!read\_accel\_xyz@{read\_accel\_xyz}}
+\index{read\_accel\_xyz@{read\_accel\_xyz}!accel\_gyro.c@{accel\_gyro.c}}
+\doxysubsubsection{\texorpdfstring{read\_accel\_xyz()}{read\_accel\_xyz()}}
+{\footnotesize\ttfamily uint8\+\_\+t read\+\_\+accel\+\_\+xyz (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reads Accel XYZ and puts them in ACCEL\+\_\+\+XYZ. 
+
+\begin{DoxyReturn}{Returns}
+uint8\+\_\+t (0 -\/ on success; 1 -\/ on failure) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{accel__gyro_8c_a54ff564d04a24c734d6f4442a109c5a9}\label{accel__gyro_8c_a54ff564d04a24c734d6f4442a109c5a9}} 
+\index{accel\_gyro.c@{accel\_gyro.c}!read\_gyro\_xyz@{read\_gyro\_xyz}}
+\index{read\_gyro\_xyz@{read\_gyro\_xyz}!accel\_gyro.c@{accel\_gyro.c}}
+\doxysubsubsection{\texorpdfstring{read\_gyro\_xyz()}{read\_gyro\_xyz()}}
+{\footnotesize\ttfamily uint8\+\_\+t read\+\_\+gyro\+\_\+xyz (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reads Gyro XYZ and puts them in GYRO\+\_\+\+XYZ. 
+
+\begin{DoxyReturn}{Returns}
+uint8\+\_\+t (0 -\/ on success; 1 -\/ on failure; 2 -\/ Data not ready) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{accel__gyro_8c_a39559b621d5750604b7bc9b42bbebe68}\label{accel__gyro_8c_a39559b621d5750604b7bc9b42bbebe68}} 
+\index{accel\_gyro.c@{accel\_gyro.c}!read\_registar@{read\_registar}}
+\index{read\_registar@{read\_registar}!accel\_gyro.c@{accel\_gyro.c}}
+\doxysubsubsection{\texorpdfstring{read\_registar()}{read\_registar()}}
+{\footnotesize\ttfamily uint8\+\_\+t read\+\_\+registar (\begin{DoxyParamCaption}\item[{unsigned char}]{reg }\end{DoxyParamCaption})}
+
+
+
+Reads 1B from a register. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg} & Address \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint8\+\_\+t (0 -\/ on success; 1 -\/ on failure) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{accel__gyro_8c_a55dd7740395cefc7771330f5db17ca1a}\label{accel__gyro_8c_a55dd7740395cefc7771330f5db17ca1a}} 
+\index{accel\_gyro.c@{accel\_gyro.c}!read\_whoami@{read\_whoami}}
+\index{read\_whoami@{read\_whoami}!accel\_gyro.c@{accel\_gyro.c}}
+\doxysubsubsection{\texorpdfstring{read\_whoami()}{read\_whoami()}}
+{\footnotesize\ttfamily uint8\+\_\+t read\+\_\+whoami (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reads Who am I reg. 
+
+\begin{DoxyReturn}{Returns}
+uint8\+\_\+t (0 -\/ on success; 1 -\/ on failure) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{accel__gyro_8c_aa1ec2637ab52ec869f59a6d28c9e6778}\label{accel__gyro_8c_aa1ec2637ab52ec869f59a6d28c9e6778}} 
+\index{accel\_gyro.c@{accel\_gyro.c}!sensor\_config@{sensor\_config}}
+\index{sensor\_config@{sensor\_config}!accel\_gyro.c@{accel\_gyro.c}}
+\doxysubsubsection{\texorpdfstring{sensor\_config()}{sensor\_config()}}
+{\footnotesize\ttfamily uint8\+\_\+t sensor\+\_\+config (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Configurs sensor. 
+
+\begin{DoxyReturn}{Returns}
+uint8\+\_\+t (0 -\/ on success; 1 -\/ on failure) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{accel__gyro_8c_a044b5607675c5e986448abbafbdef3fa}\label{accel__gyro_8c_a044b5607675c5e986448abbafbdef3fa}} 
+\index{accel\_gyro.c@{accel\_gyro.c}!spi\_read\_write@{spi\_read\_write}}
+\index{spi\_read\_write@{spi\_read\_write}!accel\_gyro.c@{accel\_gyro.c}}
+\doxysubsubsection{\texorpdfstring{spi\_read\_write()}{spi\_read\_write()}}
+{\footnotesize\ttfamily uint8\+\_\+t spi\+\_\+read\+\_\+write (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{data,  }\item[{int}]{length }\end{DoxyParamCaption})}
+
+
+
+Transfers data on the SPI interface. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Write/\+Read data \\
+\hline
+{\em length} & Number of bytes to transfers \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint8\+\_\+t (0 -\/ on success; 1 -\/ on failure) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{accel__gyro_8c_a01c573e0e8286b1c3a4335b3d2280ee7}\label{accel__gyro_8c_a01c573e0e8286b1c3a4335b3d2280ee7}} 
+\index{accel\_gyro.c@{accel\_gyro.c}!write\_registar@{write\_registar}}
+\index{write\_registar@{write\_registar}!accel\_gyro.c@{accel\_gyro.c}}
+\doxysubsubsection{\texorpdfstring{write\_registar()}{write\_registar()}}
+{\footnotesize\ttfamily uint8\+\_\+t write\+\_\+registar (\begin{DoxyParamCaption}\item[{unsigned char}]{reg,  }\item[{unsigned char}]{val }\end{DoxyParamCaption})}
+
+
+
+Writes 1B to a register. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em reg} & Address \\
+\hline
+{\em val} & Value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+uint8\+\_\+t (0 -\/ on success; 1 -\/ on failure) 
+\end{DoxyReturn}

@@ -1,0 +1,59 @@
+\hypertarget{test__whoami_8c}{}\doxysection{src/test\+\_\+whoami.c File Reference}
+\label{test__whoami_8c}\index{src/test\_whoami.c@{src/test\_whoami.c}}
+
+
+By default read Who am I register. But can be used for reading and writing to a specific reg.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}accel\+\_\+gyro.\+h\char`\"{}}\newline
+Include dependency graph for test\+\_\+whoami.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{test__whoami_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em main app \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+By default read Who am I register. But can be used for reading and writing to a specific reg. 
+
+\begin{DoxyAuthor}{Author}
+your name (\href{mailto:you@domain.com}{\texttt{ you@domain.\+com}}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+3 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/08-\/29
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{test__whoami_8c_a3c04138a5bfe5d72780bb7e82a18e627}\label{test__whoami_8c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{test\_whoami.c@{test\_whoami.c}!main@{main}}
+\index{main@{main}!test\_whoami.c@{test\_whoami.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+main app 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & number of arguments \\
+\hline
+{\em argv\mbox{[}1\mbox{]}} & reg addres \\
+\hline
+{\em argv\mbox{[}2\mbox{]}} & value to write in reg. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int (0 -\/ on success; 1 -\/ on failure) 
+\end{DoxyReturn}

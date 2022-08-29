@@ -1,0 +1,88 @@
+\hypertarget{main_8c}{}\doxysection{src/main.c File Reference}
+\label{main_8c}\index{src/main.c@{src/main.c}}
+
+
+Main application for rpi gimble.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}accel\+\_\+gyro.\+h\char`\"{}}\newline
+Include dependency graph for main.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8c_a89d4a06b1e03c40d27b285dd0bac8548}{close\+\_\+me}} (int i)
+\begin{DoxyCompactList}\small\item\em Runs when CTRL+C is prest. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8c_a9424343761f8c4f4c1afe8f5b6bf471b}\label{main_8c_a9424343761f8c4f4c1afe8f5b6bf471b}} 
+double {\bfseries beta}
+\item 
+\mbox{\Hypertarget{main_8c_afaff28276b1e53a33f0a5c21dccefa53}\label{main_8c_afaff28276b1e53a33f0a5c21dccefa53}} 
+double {\bfseries trsh} = 4.\+0
+\item 
+\mbox{\Hypertarget{main_8c_adf916204820072417ed73a32de1cefcf}\label{main_8c_adf916204820072417ed73a32de1cefcf}} 
+int {\bfseries flag} = 1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main application for rpi gimble. 
+
+\begin{DoxyAuthor}{Author}
+Nemanja 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/08-\/29
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8c_a89d4a06b1e03c40d27b285dd0bac8548}\label{main_8c_a89d4a06b1e03c40d27b285dd0bac8548}} 
+\index{main.c@{main.c}!close\_me@{close\_me}}
+\index{close\_me@{close\_me}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{close\_me()}{close\_me()}}
+{\footnotesize\ttfamily void close\+\_\+me (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+Runs when CTRL+C is prest. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & not in use \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}\label{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & Number of arguments of command line \\
+\hline
+{\em argv\mbox{[}1\mbox{]}(alfa)} & The angle around which it balances, default = 0 \\
+\hline
+{\em argv\mbox{[}2\mbox{]}(avarge)} & The number of angles which is used to find avarge angle, default = 30 \\
+\hline
+{\em argv\mbox{[}3\mbox{]}(ker)} & Step of incrementing the duration of the pwm signal, default = 4 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 
+\end{DoxyReturn}

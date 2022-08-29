@@ -1,0 +1,63 @@
+\hypertarget{test__angles_8c}{}\doxysection{src/test\+\_\+angles.c File Reference}
+\label{test__angles_8c}\index{src/test\_angles.c@{src/test\_angles.c}}
+
+
+Reads and prints all the accel and gyro data from the sensor. And the appropriate angles.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}accel\+\_\+gyro.\+h\char`\"{}}\newline
+Include dependency graph for test\+\_\+angles.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{test__angles_8c_a89d4a06b1e03c40d27b285dd0bac8548}{close\+\_\+me}} (int i)
+\begin{DoxyCompactList}\small\item\em Runs close\+\_\+me when CTRL+C is prest. Sets flag to 0 to stop the app and closes evry thig properly. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{test__angles_8c_a3c04138a5bfe5d72780bb7e82a18e627}\label{test__angles_8c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+int {\bfseries main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{test__angles_8c_aff31312fb16705aa73c53b945a1a6b30}\label{test__angles_8c_aff31312fb16705aa73c53b945a1a6b30}} 
+uint8\+\_\+t {\bfseries flag} = 1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Reads and prints all the accel and gyro data from the sensor. And the appropriate angles. 
+
+\begin{DoxyAuthor}{Author}
+Aleksandar Bešlić (\href{mailto:alex.beslic@gmail.com}{\texttt{ alex.\+beslic@gmail.\+com}}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/08-\/29
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{test__angles_8c_a89d4a06b1e03c40d27b285dd0bac8548}\label{test__angles_8c_a89d4a06b1e03c40d27b285dd0bac8548}} 
+\index{test\_angles.c@{test\_angles.c}!close\_me@{close\_me}}
+\index{close\_me@{close\_me}!test\_angles.c@{test\_angles.c}}
+\doxysubsubsection{\texorpdfstring{close\_me()}{close\_me()}}
+{\footnotesize\ttfamily void close\+\_\+me (\begin{DoxyParamCaption}\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+Runs close\+\_\+me when CTRL+C is prest. Sets flag to 0 to stop the app and closes evry thig properly. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & not in use \\
+\hline
+\end{DoxyParams}

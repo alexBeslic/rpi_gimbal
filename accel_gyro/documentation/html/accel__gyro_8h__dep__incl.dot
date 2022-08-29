@@ -1,0 +1,16 @@
+digraph "src/accel_gyro.h"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  Node1 [label="src/accel_gyro.h",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Header file for the library for 6DOF IMU 5 CLICK(ICM-20789). Uses SPI bus to interface with the senso..."];
+  Node1 -> Node2 [dir="back",color="steelblue1",style="solid"];
+  Node2 [label="src/accel_gyro.c",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$accel__gyro_8c.html",tooltip="Library for 6DOF IMU 5 CLICK(ICM-20789). Uses SPI bus to interface with the sensor."];
+  Node1 -> Node3 [dir="back",color="steelblue1",style="solid"];
+  Node3 [label="src/main.c",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$main_8c.html",tooltip="Main application for rpi gimble."];
+  Node1 -> Node4 [dir="back",color="steelblue1",style="solid"];
+  Node4 [label="src/test_angles.c",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$test__angles_8c.html",tooltip="Reads and prints all the accel and gyro data from the sensor. And the appropriate angles."];
+  Node1 -> Node5 [dir="back",color="steelblue1",style="solid"];
+  Node5 [label="src/test_whoami.c",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$test__whoami_8c.html",tooltip="By default read Who am I register. But can be used for reading and writing to a specific reg."];
+}

@@ -1,0 +1,32 @@
+digraph "src/accel_gyro.c"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  Node1 [label="src/accel_gyro.c",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Library for 6DOF IMU 5 CLICK(ICM-20789). Uses SPI bus to interface with the sensor."];
+  Node1 -> Node2 [color="steelblue1",style="solid"];
+  Node2 [label="accel_gyro.h",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$accel__gyro_8h.html",tooltip="Header file for the library for 6DOF IMU 5 CLICK(ICM-20789). Uses SPI bus to interface with the senso..."];
+  Node2 -> Node3 [color="steelblue1",style="solid"];
+  Node3 [label="stdio.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
+  Node2 -> Node4 [color="steelblue1",style="solid"];
+  Node4 [label="stdint.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
+  Node2 -> Node5 [color="steelblue1",style="solid"];
+  Node5 [label="stdlib.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
+  Node2 -> Node6 [color="steelblue1",style="solid"];
+  Node6 [label="unistd.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
+  Node2 -> Node7 [color="steelblue1",style="solid"];
+  Node7 [label="string.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
+  Node2 -> Node8 [color="steelblue1",style="solid"];
+  Node8 [label="math.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
+  Node2 -> Node9 [color="steelblue1",style="solid"];
+  Node9 [label="fcntl.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
+  Node2 -> Node10 [color="steelblue1",style="solid"];
+  Node10 [label="sys/ioctl.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
+  Node2 -> Node11 [color="steelblue1",style="solid"];
+  Node11 [label="linux/types.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
+  Node2 -> Node12 [color="steelblue1",style="solid"];
+  Node12 [label="linux/spi/spidev.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
+  Node2 -> Node13 [color="steelblue1",style="solid"];
+  Node13 [label="sys/time.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
+}
