@@ -1,5 +1,5 @@
 /**
- * @file accel_test.c
+ * @file main.c
  * @author Nemanja
  * @brief Main application for rpi gimble
  * @version 0.1
@@ -12,7 +12,7 @@
 /*
     compile:
     
-    arm-linux-gnueabihf-gcc -Wall accel_gyro.c accel_test.c -lm -lrt -std=gnu99 -o who
+    arm-linux-gnueabihf-gcc -Wall accel_gyro.c main.c -lm -lrt -std=gnu99 -o program
 
 */
 
