@@ -1,3 +1,15 @@
+/**
+ * @file pwm_driver.c
+ * @author Nikola Cetić (you@domain.com)
+ * @brief Driver module for PWM driven servo motor bs-422. 
+ * @version 0.1
+ * @date 2022-08-29
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
+
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/fs.h>
@@ -8,7 +20,7 @@
 
 /* Meta Information */
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Nas trojica");
+MODULE_AUTHOR("rpi_gimbal");
 MODULE_DESCRIPTION("A simple driver to access the Hardware PWM IP");
 
 /* Variables for device and device class */
@@ -23,7 +35,7 @@ static struct cdev my_device;
 struct pwm_device *pwm0 = NULL;
 u32 pwm_on_time = 1830000;
 u32 pwm_period = 20000000;
-u32 osjetljivost = 400;
+u32 sensibility = 400;
 
 /**
  * @brief Write data to buffer
@@ -35,14 +47,15 @@ static ssize_t driver_write(struct file *File, const char *user_buffer, size_t c
 
 	/* Copy data to user */
 	not_copied = copy_from_user(value, user_buffer, count);
+	/* Terminating string */
 	value[count-1] = 0x00;
 	ret = kstrtol(value, 10, &pom);
 	
 	/* Set PWM on time */
-	if(pom < 0 && pom > osjetljivost)
+	if(pom < 0 && pom > sensibility)
 		printk("Invalid Value\n");
 	else
-		pwm_config(pwm0, pwm_on_time/osjetljivost * pom + 670000, pwm_period);
+		pwm_config(pwm0, pwm_on_time/sensibility * pom + 670000, pwm_period);
 
 	return count;
 }

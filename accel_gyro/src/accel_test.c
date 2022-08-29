@@ -1,28 +1,58 @@
+/**
+ * @file accel_test.c
+ * @author Nemanja
+ * @brief Main application for rpi gimble
+ * @version 0.1
+ * @date 2022-08-29
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
+/*
+    compile:
+    
+    arm-linux-gnueabihf-gcc -Wall accel_gyro.c accel_test.c -lm -lrt -std=gnu99 -o who
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
 #include "accel_gyro.h"
-static char *servo_file_name = (char*)"/dev/servo_driver";
 
+static char *servo_file_name = (char*)"/dev/servo_driver";
 double beta;
 double trsh = 4.0;
 int flag = 1;
 
+/**
+ * @brief Runs when CTRL+C is prest
+ * 
+ * @param i not in use
+ */
 void close_me(int i)
 {
 	flag = 0;
 }
 
+/**
+ * @param argc Number of arguments of command line
+ * @param argv[1](alfa) The angle around which it balances, default = 0
+ * @param argv[2](avarge) The number of angles which is used to find avarge angle, default = 30
+ * @param argv[3](ker) Step of incrementing the duration of the pwm signal, default = 4
+ * @return 0 
+ */
 int main(int argc, char **argv)
 {
 	/* Runs close_me when CTRL+C is prest*/
 	signal(SIGINT, close_me);
 	float alfa;
-	int srednje;
+	int avarge;
 	int ker;
 	int kernel = 0;
-    double pom;
+    double temp;
     uint8_t ret;
     
 	switch(argc){
@@ -31,22 +61,23 @@ int main(int argc, char **argv)
 			break;
 		case 3:
 			alfa = atof(argv[1]);
-			srednje = atoi(argv[2]);
+			avarge = atoi(argv[2]);
 			break;
 		case 4:
 			alfa = atof(argv[1]);
-			srednje = atoi(argv[2]);
+			avarge = atoi(argv[2]);
 			ker = atoi(argv[3]);
 			break;
 		default:
 			alfa = 0;
-			srednje = 30;
+			avarge = 30;
 			ker = 4;		
 	}
     
-	/* Setup the pwm driver*/
+	/* Setup the pwm driver */
     ret = system("sudo insmod pwm_driver.ko");
     
+	/* Start angle of servo */
     char buff[10];
     sprintf(buff, "%d", kernel);
 	int file_dsc = open(servo_file_name, O_RDWR);
@@ -79,16 +110,16 @@ int main(int argc, char **argv)
 
     while (flag)
     {
-		pom = 0;
+		temp = 0;
 		
-		for(int i = 0; i < srednje; i++)
+		for(int i = 0; i < avarge; i++)
 		{
 			getAngles();
-			pom += angles.y;
+			temp += angles.y;
 		}
 
-		printf("Izmjereni ugao: %f\n", beta);
-		beta = pom / ((double) srednje);
+		printf("Measured angle: %f\n", beta);
+		beta = temp / ((double) avarge);
 		fflush(stdout);
 		
 		if((beta - alfa) < (trsh * (-1.0)) || (beta - alfa) > trsh)
@@ -106,7 +137,6 @@ int main(int argc, char **argv)
 				write(file_dsc, buff, 10);
 			}
 		}
-		//usleep(1000);
     }
     
 	close_spi_bus();
