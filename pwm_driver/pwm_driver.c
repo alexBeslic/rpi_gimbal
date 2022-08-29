@@ -33,10 +33,10 @@ static struct cdev my_device;
 
 /* Variables for pwm  */
 struct pwm_device *pwm0 = NULL;
-u32 pwm_min_duration = 670000; // minimum duration of pwm signal in micro seconds
+u32 pwm_min_duration = 670000; /** minimum duration of pwm signal in micro seconds*/
 u32 pwm_max_duration = 1830000;
-u32 pwm_period = 20000000;// period of signal equivalent to 50Hz
-u32 sensitivity = 400;//means 195 degrees of servo max angle is divided in 400 increments
+u32 pwm_period = 20000000;/** period of signal equivalent to 50Hz*/
+u32 sensitivity = 400;/**means 195 degrees of servo max angle is divided in 400 increments*/
 
 /**
  * @brief Write data to buffer

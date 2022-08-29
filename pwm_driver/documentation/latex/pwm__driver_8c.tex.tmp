@@ -50,14 +50,12 @@ struct pwm\+\_\+device $\ast$ {\bfseries pwm0} = NULL
 \mbox{\Hypertarget{pwm__driver_8c_ab0e85b1d2fab1389ce057339644fb6d7}\label{pwm__driver_8c_ab0e85b1d2fab1389ce057339644fb6d7}} 
 u32 {\bfseries pwm\+\_\+min\+\_\+duration} = 670000
 \item 
-\mbox{\Hypertarget{pwm__driver_8c_a52a13acc6bd445ea31b5454e4eef10f7}\label{pwm__driver_8c_a52a13acc6bd445ea31b5454e4eef10f7}} 
-u32 {\bfseries pwm\+\_\+max\+\_\+duration} = 1830000
+u32 \mbox{\hyperlink{pwm__driver_8c_a52a13acc6bd445ea31b5454e4eef10f7}{pwm\+\_\+max\+\_\+duration}} = 1830000
 \item 
 \mbox{\Hypertarget{pwm__driver_8c_aac75fce701938f4d591bd9a2197675e6}\label{pwm__driver_8c_aac75fce701938f4d591bd9a2197675e6}} 
 u32 {\bfseries pwm\+\_\+period} = 20000000
 \item 
-\mbox{\Hypertarget{pwm__driver_8c_ad077826f59029468787e5365fa2cf1dc}\label{pwm__driver_8c_ad077826f59029468787e5365fa2cf1dc}} 
-u32 {\bfseries sensitivity} = 400
+u32 \mbox{\hyperlink{pwm__driver_8c_ad077826f59029468787e5365fa2cf1dc}{sensitivity}} = 400
 \end{DoxyCompactItemize}
 
 
@@ -76,3 +74,19 @@ Nikola Cetić (\href{mailto:nikolacetic8@gmail.com}{\texttt{ nikolacetic8@gmail.
 \begin{DoxyCopyright}{Copyright}
 Copyright (c) 2022 
 \end{DoxyCopyright}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{pwm__driver_8c_a52a13acc6bd445ea31b5454e4eef10f7}\label{pwm__driver_8c_a52a13acc6bd445ea31b5454e4eef10f7}} 
+\index{pwm\_driver.c@{pwm\_driver.c}!pwm\_max\_duration@{pwm\_max\_duration}}
+\index{pwm\_max\_duration@{pwm\_max\_duration}!pwm\_driver.c@{pwm\_driver.c}}
+\doxysubsubsection{\texorpdfstring{pwm\_max\_duration}{pwm\_max\_duration}}
+{\footnotesize\ttfamily u32 pwm\+\_\+max\+\_\+duration = 1830000}
+
+minimum duration of pwm signal in micro seconds \mbox{\Hypertarget{pwm__driver_8c_ad077826f59029468787e5365fa2cf1dc}\label{pwm__driver_8c_ad077826f59029468787e5365fa2cf1dc}} 
+\index{pwm\_driver.c@{pwm\_driver.c}!sensitivity@{sensitivity}}
+\index{sensitivity@{sensitivity}!pwm\_driver.c@{pwm\_driver.c}}
+\doxysubsubsection{\texorpdfstring{sensitivity}{sensitivity}}
+{\footnotesize\ttfamily u32 sensitivity = 400}
+
+period of signal equivalent to 50Hz 

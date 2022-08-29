@@ -22,10 +22,23 @@
 
  @licend  The above is the entire license notice for the JavaScript code in this file
 */
-var menudata={children:[
-{text:"Main Page",url:"index.html"},
-{text:"Files",url:"files.html",children:[
-{text:"File List",url:"files.html"},
-{text:"Globals",url:"globals.html",children:[
-{text:"All",url:"globals.html"},
-{text:"Variables",url:"globals_vars.html"}]}]}]}
+var NAVTREE =
+[
+  [ "PWM_Driver", "index.html", [
+    [ "Files", "files.html", [
+      [ "File List", "files.html", "files_dup" ],
+      [ "Globals", "globals.html", [
+        [ "All", "globals.html", null ],
+        [ "Variables", "globals_vars.html", null ]
+      ] ]
+    ] ]
+  ] ]
+];
+
+var NAVTREEINDEX =
+[
+"dir_07e41b2c15dd223e977d7dd8d5a9246a.html"
+];
+
+var SYNCONMSG = 'click to disable panel synchronisation';
+var SYNCOFFMSG = 'click to enable panel synchronisation';
