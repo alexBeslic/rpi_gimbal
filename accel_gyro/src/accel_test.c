@@ -48,9 +48,9 @@ int main(int argc, char **argv)
 {
 	/* Runs close_me when CTRL+C is prest*/
 	signal(SIGINT, close_me);
-	float alfa;
-	int avarge;
-	int ker;
+	float alfa = 0;
+	int avarge = 30;
+	int ker = 4;
 	int kernel = 0;
     double temp;
     uint8_t ret;
