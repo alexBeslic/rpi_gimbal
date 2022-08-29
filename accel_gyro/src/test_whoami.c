@@ -1,13 +1,26 @@
+/**
+ * @file test_whoami.c
+ * @author your name (you@domain.com)
+ * @brief By default read Who am I register. But can be used for reading and writing to a specific reg. 
+ * @version 0.3
+ * @date 2022-08-29
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "accel_gyro.h"
 
-/*
-    compile:
-    
-    arm-linux-gnueabihf-gcc -Wall accel_gyro.c test_whoami.c -o who
-*/
-
+/**
+ * @brief main app
+ * 
+ * @param argc number of arguments
+ * @param argv[1] reg addres
+ * @param argv[2] value to write in reg.
+ * @return int (0 - on success; 1 - on failure)
+ */
 int main(int argc, char **argv)
 {
     uint8_t ret;

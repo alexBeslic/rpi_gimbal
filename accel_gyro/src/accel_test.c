@@ -4,13 +4,6 @@
 #include <signal.h>
 #include "accel_gyro.h"
 static char *servo_file_name = (char*)"/dev/servo_driver";
-/*
-    compile:
-    
-    arm-linux-gnueabihf-gcc -Wall accel_gyro.c accel_test.c -lm -lrt -std=gnu99 -o who
-
-	chrt -f 99 ./who (FIFO, P=99)
-*/
 
 double beta;
 double trsh = 4.0;

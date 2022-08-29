@@ -1,3 +1,13 @@
+/**
+ * @file accel_gyro.h
+ * @author Aleksandar Bešlić (alex.beslic@gmail.com)
+ * @brief Header file for the library for 6DOF IMU 5 CLICK(ICM-20789). Uses SPI bus to interface with the sensor.
+ * @version 0.8
+ * @date 2022-08-29
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #ifndef ACCEL_GYRO_H_INCLUDED
 #define ACCEL_GYRO_H_INCLUDED
 
@@ -21,8 +31,21 @@
 #define GYRO_CTRL_ADDR 		0x1B
 #define ACCEL_CTRL1_ADDR	0x1C
 #define ACCEL_CTRL2_ADDR	0x1D
-#define ACCEL_XOUT_H_ADDR   0x3B // 6B to read
-#define GYRO_XOUT_H_ADDR    0x43 // 6B to read
+
+#define ACCEL_XOUT_H_ADDR   0x3B
+#define ACCEL_XOUT_L_ADDR   0x3C
+#define ACCEL_YOUT_H_ADDR   0x3D
+#define ACCEL_YOUT_L_ADDR   0x3E
+#define ACCEL_ZOUT_H_ADDR   0x3F
+#define ACCEL_ZOUT_L_ADDR   0x40
+
+#define GYRO_XOUT_H_ADDR    0x43
+#define GYRO_XOUT_L_ADDR    0x44
+#define GYRO_YOUT_H_ADDR    0x45
+#define GYRO_YOUT_L_ADDR    0x46
+#define GYRO_ZOUT_H_ADDR    0x47
+#define GYRO_ZOUT_L_ADDR    0x48
+
 #define PWR_MGMT_1_ADDR 	0x6B
 
 /* Register Configuration*/
@@ -35,7 +58,8 @@
 #define ACCEL_CONV_CONST	2048.00 // Units LSB/g 
 #define GYRO_CONV_CONST     16.4 // Units LSB/(dps)
 
-// Strict definition
+// Struct definition
+
 struct sensor_data
 {
     float x;
@@ -43,13 +67,14 @@ struct sensor_data
     float z;
 };
 
-volatile struct sensor_data ACCEL_XYZ;
-volatile struct sensor_data GYRO_XYZ;
-volatile struct sensor_data angles;
+volatile struct sensor_data ACCEL_XYZ; // Accel XYZ data (g)
+volatile struct sensor_data GYRO_XYZ;  // Gyro XYZ data (dsp)
+volatile struct sensor_data angles;    // XYZ angels (in degrees)
 
 
 
 // Function declaration
+
 uint8_t open_spi_bus();
 uint8_t close_spi_bus();
 uint8_t sensor_config();

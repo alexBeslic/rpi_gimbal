@@ -1,9 +1,9 @@
 /**
  * @file accel_gyro.c
- * @author rpi_gimbal
- * @brief SPI interface for 6DOF IMU 5 CLICK(ICM-20789).
- * @version 0.1
- * @date 2022-08-21
+ * @author Aleksandar Bešlić (alex.beslic@gmail.com)
+ * @brief  Library for 6DOF IMU 5 CLICK(ICM-20789). Uses SPI bus to interface with the sensor.
+ * @version 0.8
+ * @date 2022-08-29
  * 
  * @copyright Copyright (c) 2022
  * 
@@ -12,18 +12,18 @@
 #include "accel_gyro.h"
 
 
-
 static char *spi_dev_name = (char*)"/dev/spidev0.0";
 static int spi_file;
 static uint8_t spi_mode;
 static uint8_t spi_bitsPerWord;
 static uint32_t  spi_speed;
-static struct sensor_data ACCEL_ERROR = {0.00037992, -0.20791744, 0.00};
-static struct sensor_data GYRO_ERROR = {0.34698471, 0.64114493, -0.28187019};
+static struct sensor_data ACCEL_ERROR = {0.00037992, -0.20791744, 0.00}; /* Error correction values for accel*/
+static struct sensor_data GYRO_ERROR = {0.34698471, 0.64114493, -0.28187019}; /* Error correction values for gyro*/
 struct sensor_data acc_angle;
 struct sensor_data gyro_angle;
 struct timeval te;
 long long curr_time = 0, prev_time = 0, elip_time = 0;
+
 /**
  * @brief Opens SPI bus
  * 
@@ -118,7 +118,7 @@ uint8_t spi_read_write(uint8_t *data, int length)
 }
 
 /**
- * @brief Configuring sensor
+ * @brief Configurs sensor.
  * 
  * @return uint8_t (0 - on success; 1 - on failure)
  */
@@ -169,23 +169,23 @@ uint8_t read_accel_xyz()
     data[1] = dummy_val;
     ret_val = spi_read_write(data, 2);
 
-    data[2] = 0x80 | (ACCEL_XOUT_H_ADDR+1);
+    data[2] = 0x80 | (ACCEL_XOUT_L_ADDR);
     data[3] = dummy_val;
     ret_val = spi_read_write(data+2, 2);
 
-    data[4] = 0x80 | (ACCEL_XOUT_H_ADDR+2);
+    data[4] = 0x80 | (ACCEL_YOUT_H_ADDR);
     data[5] = dummy_val;
     ret_val = spi_read_write(data+4, 2);
 
-    data[6] = 0x80 | (ACCEL_XOUT_H_ADDR+3);
+    data[6] = 0x80 | (ACCEL_YOUT_L_ADDR);
     data[7] = dummy_val;
     ret_val = spi_read_write(data+6, 2);
 
-    data[8] = 0x80 | (ACCEL_XOUT_H_ADDR+4);
+    data[8] = 0x80 | (ACCEL_ZOUT_H_ADDR);
     data[9] = dummy_val;
     ret_val = spi_read_write(data+8, 2);
 
-    data[10] = 0x80 | (ACCEL_XOUT_H_ADDR+5);
+    data[10] = 0x80 | (ACCEL_ZOUT_L_ADDR);
     data[11] = dummy_val;
     ret_val = spi_read_write(data+10, 2);
 
@@ -221,23 +221,23 @@ uint8_t read_gyro_xyz()
     data[1] = dummy_val;
     ret_val = spi_read_write(data, 2);
 
-    data[2] = 0x80 | (GYRO_XOUT_H_ADDR+1);
+    data[2] = 0x80 | (GYRO_XOUT_L_ADDR);
     data[3] = dummy_val;
     ret_val = spi_read_write(data+2, 2);
 
-    data[4] = 0x80 | (GYRO_XOUT_H_ADDR+2);
+    data[4] = 0x80 | (GYRO_YOUT_H_ADDR);
     data[5] = dummy_val;
     ret_val = spi_read_write(data+4, 2);
 
-    data[6] = 0x80 | (GYRO_XOUT_H_ADDR+3);
+    data[6] = 0x80 | (GYRO_YOUT_L_ADDR);
     data[7] = dummy_val;
     ret_val = spi_read_write(data+6, 2);
 
-    data[8] = 0x80 | (GYRO_XOUT_H_ADDR+4);
+    data[8] = 0x80 | (GYRO_ZOUT_H_ADDR);
     data[9] = dummy_val;
     ret_val = spi_read_write(data+8, 2);
 
-    data[10] = 0x80 | (GYRO_XOUT_H_ADDR+5);
+    data[10] = 0x80 | (GYRO_ZOUT_H_ADDR);
     data[11] = dummy_val;
     ret_val = spi_read_write(data+10, 2);
 
@@ -259,7 +259,7 @@ uint8_t read_gyro_xyz()
 }
 
 /**
- * @brief Who am I 
+ * @brief Reads Who am I reg
  * 
  * @return uint8_t (0 - on success; 1 - on failure)
  */
@@ -342,7 +342,8 @@ uint8_t write_registar(unsigned char reg, unsigned char val)
 }
 
 /**
- * @brief Gets the error correction values for accel and gyro
+ * @brief Gets the error correction values for accel and gyro. Puts them in ACCEL_ERROR and GYRO_ERROR.
+ * Sensor needs to be completely flat.
  * 
  * @return uint8_t (0 - on success; 1 - on failure)
  */
@@ -403,7 +404,7 @@ uint8_t calculate_error()
 }
 
 /**
- * @brief Gets current time
+ * @brief Gets current time in miliseconds
  * 
  * @return long long time in miliseconds
  */
@@ -415,7 +416,7 @@ long long current_time()
 }
 
 /**
- * @brief Get the Angles object
+ * @brief Get the Angles object and puts them in angles.
  * 
  */
 void getAngles()

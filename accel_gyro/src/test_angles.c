@@ -1,17 +1,27 @@
+/**
+ * @file test_angles.c
+ * @author Aleksandar Bešlić (alex.beslic@gmail.com)
+ * @brief Reads and prints all the accel and gyro data from the sensor. And the appropriate angles.
+ * @version 0.1
+ * @date 2022-08-29
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
 #include "accel_gyro.h"
-/*
-    compile:
-    
-    arm-linux-gnueabihf-gcc -Wall accel_gyro.c test_angles.c -lm -lrt -std=gnu99 -o angles
-
-*/
 
 uint8_t flag = 1;
 
+/**
+ * @brief Runs close_me when CTRL+C is prest. Sets flag to 0 to stop the app and closes evry thig properly
+ * 
+ * @param i not in use
+ */
 void close_me(int i)
 {
 	flag = 0;
@@ -19,10 +29,9 @@ void close_me(int i)
 
 int main(int argc, char **argv)
 {
-    /* Runs close_me when CTRL+C is prest*/
 	signal(SIGINT, close_me);
 
-    u_int8_t ret;
+    uint8_t ret;
 
     ret = open_spi_bus();
 
@@ -58,6 +67,5 @@ int main(int argc, char **argv)
         usleep(500000);
     }
     
-
     close_spi_bus();
 }
