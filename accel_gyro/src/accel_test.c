@@ -25,14 +25,31 @@ int main(int argc, char **argv)
 {
 	/* Runs close_me when CTRL+C is prest*/
 	signal(SIGINT, close_me);
-	
-    uint8_t ret;
-
-    float alfa = atof(argv[1]);
-    int srednje = atoi(argv[2]);
-    int ker = atoi(argv[3]);
-    int kernel = 0;
+	float alfa;
+	int srednje;
+	int ker;
+	int kernel = 0;
     double pom;
+    uint8_t ret;
+    
+	switch(argc){
+		case 2: 
+			alfa = atof(argv[1]);
+			break;
+		case 3:
+			alfa = atof(argv[1]);
+			srednje = atoi(argv[2]);
+			break;
+		case 4:
+			alfa = atof(argv[1]);
+			srednje = atoi(argv[2]);
+			ker = atoi(argv[3]);
+			break;
+		default:
+			alfa = 0;
+			srednje = 30;
+			ker = 4;		
+	}
     
 	/* Setup the pwm driver*/
     ret = system("sudo insmod pwm_driver.ko");
@@ -77,7 +94,7 @@ int main(int argc, char **argv)
 			pom += angles.y;
 		}
 
-		printf("pom: %f agels: %f beta: %f\n", pom, angles.y, beta);
+		printf("Izmjereni ugao: %f\n", beta);
 		beta = pom / ((double) srednje);
 		fflush(stdout);
 		
@@ -96,6 +113,7 @@ int main(int argc, char **argv)
 				write(file_dsc, buff, 10);
 			}
 		}
+		//usleep(1000);
     }
     
 	close_spi_bus();

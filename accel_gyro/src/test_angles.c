@@ -49,9 +49,9 @@ int main(int argc, char **argv)
 
         printf("------------------------------------------\n");
         printf("| Accel | %-8.4f | %-8.4f | %-8.4f |\n", ACCEL_XYZ.x, ACCEL_XYZ.y, ACCEL_XYZ.z);
-        printf("------------------------------------------");
+        printf("------------------------------------------\n");
         printf("| Gyro  | %-8.4f | %-8.4f | %-8.4f |\n", GYRO_XYZ.x, GYRO_XYZ.y, GYRO_XYZ.z);
-        printf("------------------------------------------");
+        printf("------------------------------------------\n");
         printf("| Angles| %-8.4f | %-8.4f | %-8.4f |\n", angles.x, angles.y, angles.z);
         printf("------------------------------------------\n");
 

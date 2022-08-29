@@ -23,7 +23,7 @@ static struct cdev my_device;
 struct pwm_device *pwm0 = NULL;
 u32 pwm_on_time = 1830000;
 u32 pwm_period = 20000000;
-u32 osjetljivost = 195;
+u32 osjetljivost = 400;
 
 /**
  * @brief Write data to buffer
