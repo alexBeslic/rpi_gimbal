@@ -1,5 +1,5 @@
 # rpi_gimbal
-Single axis gimbal using Raspberry Pi 2 model B, 6DOF IMU 5 CLICK(ICM-20789) and servo motor BS-422.  
+Single axis gimbal using Raspberry Pi 2 model B, 6DOF IMU 5 CLICK(ICM-20789) and servo motor HS-422.  
 
 ## Enabling The SPI Port on the Raspberry Pi
 Use the raspbian config tool: 
